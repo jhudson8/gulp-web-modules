@@ -7,7 +7,7 @@ function checkOptions(options, mergeOptions) {
     var _defaults = {
         scss: true,
         entry: 'main.js',
-        primaryModule: 'base',
+        primarySection: 'base',
         buildPath: 'build'
     }
     for (var i in _defaults) {
