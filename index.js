@@ -62,11 +62,11 @@ module.exports = function(options) {
         },
 
         build: function() {
-            builder(options);
+            builder(checkOptions(options, {buildType: gulp.env.type || 'dev'}));
         },
 
         watch: function() {
-            builder(checkOptions(options, {watch: true}));
+            builder(checkOptions(options, checkOptions(options, {buildType: gulp.env.type || 'dev', watch: true})));
         },
 
         clean: function() {
