@@ -23,18 +23,13 @@ Add this to your gulpfile
 require('gulp-web-modules').injectTasks(gulp);
 ```
 That's it!  Now you can run:
-```
-gulp generate-example
-```
-```
-gulp watch
-```
-Then, just browse build/index.html
+* ```gulp clean```
+* ```gulp watch``` build the application and watch for any changes
+* ```gulp watchrun``` watch task and run a local server to view your app on ```localhost:8080```
 
 
-How does it work?
+Project structure
 ==================
-Your application has a specific structure.
 ```
 config
   |-- dev.json
