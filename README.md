@@ -18,11 +18,17 @@ Add this to package.json
     "gulp-web-modules": "..."
   }
 ```
-Add this to your gulpfile
+
+Add the builder tasks to your gulpfile
 ```
 require('gulp-web-modules').injectTasks(gulp);
 ```
+
+Create a ```./lib``` directory and add [require.js](http://requirejs.org/docs/download.html) to it
+
+
 That's it!  Now you can run:
+
 * ```gulp clean```
 * ```gulp watch``` build the application and watch for any changes
 * ```gulp watchrun``` watch task and run a local server to view your app on ```localhost:8080```
@@ -133,5 +139,5 @@ View the [source code](https://github.com/jhudson8/gulp-web-modules/tree/master/
 * ```git clone git@github.com:jhudson8/gulp-web-modules.git```
 * ```cd gulp-web-modules/example/```
 * ```npm install```
-* ```gulp watch```
-* ```browse to build/index.html```
+* ```gulp watchrun```
+* ```browse to localhost:8080```
