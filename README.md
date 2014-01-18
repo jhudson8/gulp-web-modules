@@ -110,6 +110,7 @@ While the example is a little silly, hopefully it demonstrates how modules and s
 
 Play with the example
 -------------
+View the [source code](https://github.com/jhudson8/gulp-web-modules/tree/master/example)
 * ```git clone git@github.com:jhudson8/gulp-web-modules.git```
 * ```cd gulp-web-modules/example/```
 * ```npm install```
