@@ -96,7 +96,7 @@ requireSection('another-section', function(anotherSectionExports) {
 global.somethingReallyImportant = 'hello';
 ```
 
-intra-section require
+intra-section (module) require
 -------------
 Intra-section modules should be treated basically the same as node modules.  These will all be packaged in the same javascript file using browserify and can be accessed synchronously.
 
