@@ -109,9 +109,29 @@ An application with the examples above will alert "hello".  This is because
 
 While the example is a little silly, hopefully it demonstrates how modules and sections can talk to eachother.
 
+Lifecycle Hooks
+===============
+Other gulp plugins can be hooked into the build process.  In fact, the example referenced below adds ReactJS into the build cycle so all .jsx files are automatically converted.  See more in the Wiki but it's as simple as
+```
+    var gulp = require('gulp')
+        modules = require('gulp-web-modules'),
+        react = require('gulp-react');
+    
+    modules({
+      onSectionPreBrowserify: function() {
+        // compile all .jsx modules to javascript
+        return react();
+      }
+    }).injectTasks(gulp);
+
+```
+
+Global Javascript Libraries
+==============
+Any javascript files included in the ```lib``` directory will be copied to the base section file so the only file that needs to be referenced from your html file is the base section javascript file.  The example referenced below uses this directory to include the react.js code.
 
 Play with the example
--------------
+===============
 View the [source code](https://github.com/jhudson8/gulp-web-modules/tree/master/example)
 * ```git clone git@github.com:jhudson8/gulp-web-modules.git```
 * ```cd gulp-web-modules/example/```
