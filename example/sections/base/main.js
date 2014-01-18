@@ -24,7 +24,7 @@ loadedSectionCallback('base');
 // async loading of another section
 requireSection(['section1'], function(module1Exports) {
   module1Exports.getUserInfo(function(user) {
-    document.getElementById('hello').innerText = 'Hello ' + user.firstName + ' ' + user.lastName;
+    require('./hello').sayHello(user.firstName);
   });
 });
 

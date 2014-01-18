@@ -11,6 +11,7 @@
   "engine": "node 0.4.1",
   "devDependencies": {
     "gulp": "~3.3.4",
-    "gulp-web-modules": "*"
+    "gulp-web-modules": "*",
+    "gulp-react": "~0.1"
   }
 }

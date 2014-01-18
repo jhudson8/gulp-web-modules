@@ -1,14 +1,23 @@
 var builder = require('./lib/builder'),
     gulp = require('gulp'),
-    clean = require('gulp-clean');
+    clean = require('gulp-clean'),
+    through = require("through2");
 
 function checkOptions(options, mergeOptions) {
     options = options || {};
-    var _defaults = {
-        scss: true,
+    var nop = function() {
+            return through(function(data) {
+                    this.emit('data', data);
+            });
+        },
+        _defaults = { 
         entry: 'main.js',
         primarySection: 'base',
-        buildPath: 'build'
+        buildPath: 'build',
+        onSectionPreBrowserify: nop,
+        onSectionPostBrowserify: nop,
+        onSectionPreDest: nop,
+        onPublicResource: nop
     }
     for (var i in _defaults) {
         if (options[i] === undefined) {
