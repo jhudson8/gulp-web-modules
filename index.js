@@ -1,7 +1,8 @@
 var builder = require('./lib/builder'),
     gulp = require('gulp'),
     clean = require('gulp-clean'),
-    through = require("through2");
+    through = require("through2"),
+    server = require("./lib/server");
 
 function checkOptions(options, mergeOptions) {
     options = options || {};
@@ -10,10 +11,15 @@ function checkOptions(options, mergeOptions) {
                     this.emit('data', data);
             });
         },
-        _defaults = { 
+        _defaults = {
         entry: 'main.js',
         primarySection: 'base',
         buildPath: 'build',
+        defaultServResource: 'index.html',
+        port: 8080,
+        proxy: function(gulpOptions, requestOptions, callback) {
+            callback();
+        },
         onSectionPreBrowserify: nop,
         onSectionPostBrowserify: nop,
         onSectionPreDest: nop,
@@ -42,7 +48,6 @@ function checkOptions(options, mergeOptions) {
 }
 
 function _clean(src) {
-    console.log('cleaning: ' + src);
     gulp.src(src, {read: false}).pipe(clean());
 }
 
@@ -76,6 +81,11 @@ module.exports = function(options) {
 
         watch: function() {
             builder(checkOptions(options, checkOptions(options, {buildType: gulp.env.type || 'dev', watch: true})));
+        },
+
+        watchrun: function() {
+            builder(checkOptions(options, checkOptions(options, {buildType: gulp.env.type || 'dev', watch: true})));
+            server.start(options);
         },
 
         clean: function() {
