@@ -2,7 +2,7 @@
   "name": "gulp-web-modules",
   "version": "0.1.0",
   "author": "Joe Hudson <joehud@gmail.com>",
-  "description": "A somewhat opinionated module driven web application build structure",
+  "description": "Easily wire up your javascript files using browserify and requirejs with this gulp plugin",
   "repository": {
     "type": "git",
     "url": "https://github.com/jhudson8/gulp-web-modules.git"

@@ -5,6 +5,8 @@ A set of gulp tasks that that make modular development of javascript web applica
 
 Javascript files can be created and referenced just like node artifacts.  These are packaged toger using browserify.  Your application can be divided into sections which can be asychronously loaded to reduce initial download size.
 
+You are not forced into any particular MVC framework - this just provides the infrastructure to build, package and reference your javascript files in a modular way.
+
 Quick Install
 =================
 This module can inject targets into your gulpfile ('clear', 'build', 'watch', 'package')
