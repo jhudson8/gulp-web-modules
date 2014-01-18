@@ -67,10 +67,12 @@ You can asynchronously retrieve another section's exports using ```requireSectio
 // will be executed when this section is referenced
 // should *not* reference module.exports
 
+// execute another section and alert it's exported content
 requireSection('another-section', function(anotherSectionExports) {
     alert(anotherSectionExports.somethingImportant);
 });
 
+// set a value which all sections have access to
 global.somethingReallyImportant = 'hello';
 ```
 
