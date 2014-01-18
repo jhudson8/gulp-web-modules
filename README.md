@@ -67,9 +67,9 @@ sections
   |-- {another section}
          |-- main.js
          |-- {other files or directories}
-  |-- public
-         |-- index.html (for example)
-         |-- {any files to be copied to the root package structure}
+public
+  |-- index.html (for example)
+  |-- {any files to be copied to the root package structure}
 ```
 ```sections/base/main.js``` should be included from your HTML file as it is the application entry point.  Within this (and any) file under the same section directory you can reference other javascript files using a node-style API.  Each section has an entry point which will be evaluated automatically when that section is loaded which is {section name}/main.js.
 
