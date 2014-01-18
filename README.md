@@ -35,6 +35,8 @@ config
   |-- dev.json
   |-- production.json
   |-- {environment}.json
+lib
+  |-- {any file to be included as a global resource in the base section}
 sections
   |-- base
          |-- main.js
