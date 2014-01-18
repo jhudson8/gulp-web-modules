@@ -24,7 +24,24 @@ Add the builder tasks to your gulpfile
 require('gulp-web-modules').injectTasks(gulp);
 ```
 
-Create a ```./lib``` directory and add [require.js](http://requirejs.org/docs/download.html) to it
+Create the initial project structure
+```
+sections
+   |-- base (will be compiled to base.js using browserify)
+        |-- main.js (application entry point)
+lib
+   |-- require.js (actual file name doesn't matter)
+public
+   |-- index.html
+```
+Sample HTML file
+```
+<html>
+  <body>Hello</body>
+  <script type="text/javascript" src="sections/base.js"></script>
+</html>
+```
+
 
 
 That's it!  Now you can run:
