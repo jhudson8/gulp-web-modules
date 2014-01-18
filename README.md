@@ -75,7 +75,7 @@ global.somethingReallyImportant = 'hello';
 
 intra-section require
 -------------
-Intra-section modules should be treated basically the same as node modules.  These will all be packaged in the same javascript file using browserify.
+Intra-section modules should be treated basically the same as node modules.  These will all be packaged in the same javascript file using browserify and can be accessed synchronously.
 
 If the javascript files are within the same section (both in sections/{the same section}).
 
