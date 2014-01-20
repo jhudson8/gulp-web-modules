@@ -3,7 +3,7 @@ var builder = require('./lib/builder'),
     clean = require('gulp-clean'),
     through = require("through2"),
     path = require('path'),
-    lifecycleEvents = ['onSectionPreBrowserify', 'onSectionPostBrowserify', 'onSectionPreDest', 'onPublicPreDest'],
+    lifecycleEvents = ['beforeBrowserify', 'afterBrowserify', 'beforeDestination', 'afterDestination'],
     plugins = [],
     devServerPlugins = [];
 

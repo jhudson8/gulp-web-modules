@@ -144,7 +144,7 @@ Other gulp plugins can be hooked into the build process.  In fact, the example r
         react = require('gulp-react');
     
     modules({
-      onSectionPreBrowserify: function() {
+      beforeBrowserify: function() {
         // compile all .jsx modules to javascript
         return react();
       }
