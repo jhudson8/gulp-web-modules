@@ -1,11 +1,11 @@
 gulp-web-modules
 ================
 
-A set of gulp tasks that that make modular development of javascript web applications easy.
+A set of gulp tasks that that make modular development of javascript web applications easy.  A dev server is also included which can serve out not only your application but mock files and proxy to external endpoints as well.  The server has a simple lifecycle plugins to be adapted to your specific development needs.
 
-Javascript files can be created and referenced just like node artifacts.  These are packaged toger using browserify.  Your application can be divided into sections which can be asychronously loaded to reduce initial download size.
+These tasks do not force any specific application framework on you.  They only provide an easy way to break up your application javascript files and other resources into modular sections.  Your javascript files can be created and referenced just like node artifacts ().  These are packaged toger using browserify.  In addition, your application can be divided into different sections which can be asychronously loaded to reduce initial download size.
 
-You are not forced into any particular MVC framework - this just provides the infrastructure to build, package and reference your javascript files in a modular way.
+This works by applying a small bit of wrapping code to each artifact that is the result of the browserify compilation step.  This adds ability for each "section" to be referenced asynchronously using requirejs to reduce initial download size.
 
 Quick Install
 =================
@@ -77,7 +77,7 @@ public
 Module and section exports
 ===============
 
-inter-section require 
+inter-section dependencies
 --------------
 You can asynchronously retrieve another section's exports using ```requireSection```
 
@@ -96,20 +96,20 @@ requireSection('another-section', function(anotherSectionExports) {
 global.somethingReallyImportant = 'hello';
 ```
 
-intra-section (module) require
+intra-section (module) dependencies
 -------------
 Intra-section modules should be treated basically the same as node modules.  These will all be packaged in the same javascript file using browserify and can be accessed synchronously.
 
-If the javascript files are within the same section (both in sections/{the same section}).
+If the javascript files are within the same section (within the same directory under ./sections/)
 
-```require('./another-module')``` will reference a sibling javascript file named ```another-module.js```.
+```require('./another-module')``` will reference a sibling javascript file named ```another-module.js```.  This is a synchronous call and no callback is required.
 ```
 // example main.js (sections/another-section/main.js)
 var somethingImportant = require('./another-module').getSomethingImportant();
 
-// 'sectionExports' allows modules to provide content to other sections
-// any module can populate to sectionExports
-sectionExports.somethingImportant = somethingImportant;
+// 'section.exports' allows modules to provide content to other sections
+// any module can populate to section.exports
+section.exports.somethingImportant = somethingImportant;
 ```
 And another file in the same section...
 ```
@@ -128,6 +128,12 @@ An application with the examples above will alert "hello".  This is because
 * the ```another-module``` module implements the ```getSomethingImportant``` by returning the global value ```somethingReallyImport``` (which was set in the base module)
 
 While the example is a little silly, hopefully it demonstrates how modules and sections can talk to eachother.
+
+Export Scope
+------------
+```module.exports```: each module can expose content that can be access synchronously by other files within the same section
+```section.exports```: is used to add conent to the callback parameter when a section is loaded asynchronously
+```global```: should be populated for any module to access at any time (as long as the section has been loaded which populates it)
 
 Lifecycle Hooks
 ===============

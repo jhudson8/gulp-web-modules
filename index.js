@@ -42,12 +42,12 @@ function checkOptions(options, mergeOptions) {
         }
         return rtn;
     }
-    console.log(JSON.stringify(options));
     return options;
 }
 
 function normalizePlugins(plugins) {
     var _plugins = {}
+    // convert all plugins entries to an array of plugin functions organized by lifecycle event
     for (var i in plugins) {
         var plugin = plugins[i];
         for (var j in lifecycleEvents) {
@@ -58,13 +58,33 @@ function normalizePlugins(plugins) {
                 var pluginPipeline = _plugins[eventName];
                 if (!pluginPipeline) {
                     // initialize
-                    pluginPipeline = lifecyclePlugin();
+                    _plugins[eventName] = [lifecyclePlugin];
                 } else {
                     // hook it into the pipeline
-                    pluginPipeline = pluginPipeline.pipe(lifecyclePlugin());
+                    pluginPipeline.push(lifecyclePlugin);
                 }
             }
         }
+    }
+
+    function convertPlugins(eventPlugins) {
+        return function() {
+            var pipeline;
+            for (var i in eventPlugins) {
+                var plugin = eventPlugins[i];
+                if (!pipeline) {
+                    pipeline = plugin();
+                } else {
+                    pipeline = pipeline.pipe(plugin());
+                }
+            }
+            return pipeline;
+        }
+    }
+
+    // replace with a function to initialize and pipe all plugins
+    for (var i in _plugins) {
+        _plugins[i] = convertPlugins(_plugins[i]);
     }
     return _plugins;
 }

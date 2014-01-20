@@ -4,6 +4,7 @@ var gulp = require('gulp')
     react = require('gulp-react');
 
 modules({
+  foo: 'bar',
   onSectionPreBrowserify: function() {
     // compile all .jsx modules to javascript
     return react();
