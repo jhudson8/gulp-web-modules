@@ -7,6 +7,27 @@ var builder = require('./lib/builder'),
     plugins = [],
     devServerPlugins = [];
 
+function initServer(options) {
+    // these server plugins were registered with web-module plugins
+    var server = require("./lib/server")(checkOptions(options, { plugins: devServerPlugins }));
+
+    var serverOptions = options.devServer;
+    if (serverOptions) {
+        // now add the plugins registered with basic web-module config
+        var knownServerPlugins = {
+            mocks: './lib/server/mock-server'
+        }
+        for (var key in knownServerPlugins) {
+            if (serverOptions[key]) {
+                var plugin = require(knownServerPlugins[key])(serverOptions[key]);
+                server.addPlugin(plugin);
+            }
+        }
+    }
+
+    return server;
+}
+
 function checkOptions(options, mergeOptions) {
     options = options || {};
     var nop = function() {
@@ -114,7 +135,7 @@ function initPlugins(options) {
 
 
     // add the root devserver plugin
-    devServerPlugins.push(options.devServer || {
+    devServerPlugins.push({
         onRequest: function(requestOptions, pluginOptions, callback) {
             var uri = requestOptions.uri;
             if (uri === '/') {
@@ -166,7 +187,7 @@ module.exports = function(options) {
 
         watchrun: function() {
             builder(checkOptions(options, checkOptions(options, {buildType: gulp.env.type || 'dev', watch: true})));
-            require("./lib/server")(checkOptions(options, { plugins: devServerPlugins })).start();
+            initServer(options).start();
         },
 
         clean: function() {

@@ -1,0 +1,3 @@
+{
+  "message": "Using the mock server (see example gulpfile for settings) this will be returned if you browse to localhost:8080/services/foo/123"
+}

@@ -8,5 +8,10 @@ modules({
   beforeBrowserify: function() {
     // compile all .jsx modules to javascript
     return react();
+  },
+  devServer: {
+    mocks: {
+      prefix: '/services/'
+    }
   }
 }).injectTasks(gulp);
