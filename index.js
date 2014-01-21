@@ -38,7 +38,7 @@ function checkOptions(options, mergeOptions) {
     });
   },
     _defaults = {
-      entry: 'main.js',
+      entry: 'index.js',
       primarySection: 'base',
       buildPath: 'build',
       defaultServResource: 'index.html',
@@ -205,6 +205,11 @@ module.exports = function (options) {
 
     clean: function () {
       _clean(options.buildPath);
+    },
+
+    jumpstart: function() {
+      gulp.src(__dirname + '/lib/template/*/**').pipe(gulp.dest('./'));
+      console.log(__dirname);
     }
   }
 }

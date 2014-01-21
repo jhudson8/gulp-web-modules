@@ -1,6 +1,6 @@
 {
   "name": "gulp-web-modules",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Joe Hudson <joehud@gmail.com>",
   "description": "Easily wire up your javascript files using browserify and requirejs with this gulp plugin",
   "repository": {

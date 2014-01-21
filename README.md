@@ -33,7 +33,7 @@ Create the initial project structure
 ```
 sections
    |-- base (will be compiled to base.js using browserify)
-        |-- main.js (application entry point)
+        |-- index.js (application entry point)
 lib
    |-- require.js (actual file name doesn't matter)
 public
@@ -65,16 +65,16 @@ lib
   |-- {any file to be included as a global resource in the base section}
 sections
   |-- base
-         |-- main.js
+         |-- index.js
          |-- ...
   |-- {another section}
-         |-- main.js
+         |-- index.js
          |-- ...
 public
   |-- index.html (for example)
   |-- {any files to be copied to the root package structure}
 ```
-`sections/base/main.js` should be included from your HTML file as it is the application entry point.  Within this (and any) file under the same section directory you can reference other javascript files using a node-style API.  Each section has an entry point which will be evaluated automatically when that section is loaded which is {section name}/main.js.
+`sections/base/index.js` should be included from your HTML file as it is the application entry point.  Within this (and any) file under the same section directory you can reference other javascript files using a node-style API.  Each section has an entry point which will be evaluated automatically when that section is loaded which is {section name}/index.js.
 
 
 Module and section exports
@@ -86,7 +86,7 @@ You can asynchronously retrieve another section's exports using `requireSection`
 
 `requireSection('another-section', function(sectionExports) { ... } )` will execute the callback function with the exports from the section located in `sections/another-section`.
 ```javascript
-// base section entry point (sections/base/main.js)
+// base section entry point (sections/base/index.js)
 // will be executed when this section is referenced
 // should *not* reference module.exports
 
@@ -107,7 +107,7 @@ If the javascript files are within the same section (within the same directory u
 
 `require('./another-module')` will reference a sibling javascript file named `another-module.js`.
 ```javascript
-// example main.js (sections/another-section/main.js)
+// example index.js (sections/another-section/index.js)
 var somethingImportant = require('./another-module').getSomethingImportant();
 
 // 'section.exports' allows modules to provide content to other sections
