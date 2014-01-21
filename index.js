@@ -148,6 +148,7 @@ function initPlugins(options) {
       })
     }
   });
+  devServerPlugins.push(require('./lib/dev-server/admin-config'));
 }
 
 function _clean(src) {
