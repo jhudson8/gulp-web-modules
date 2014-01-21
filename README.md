@@ -24,34 +24,39 @@ Add this to package.json
   }
 ```
 
-Add the builder tasks to your gulpfile
+Add the builder tasks to your gulpfile.  This is a sample gulpfile configured to serve out mocks as well
 ```javascript
-  require('gulp-web-modules').injectTasks(gulp);
+var gulp = require('gulp')
+    gulpWebModules = require('gulp-web-modules');
+
+gulpWebModules({
+  devServer: {
+    mocks: {
+      prefix: '/services/'
+    }
+  }
+}).injectTasks(gulp);
 ```
 
-Create the initial project structure
+Execute the `jumpstart` task
 ```
-sections
-   |-- base (will be compiled to base.js using browserify)
-        |-- index.js (application entry point)
-lib
-   |-- require.js (actual file name doesn't matter)
-public
-   |-- index.html
+gulp jumpstart
 ```
-Sample HTML file
-```html
-<html>
-  <body>Hello</body>
-  <script type="text/javascript" src="sections/base.js"></script>
-</html>
+
+Start the dev server and watch for file changes
 ```
+gulp watchrun
+```
+
+Look at your app on localhost:8080;  You can turn on the mock integration by browsing to localhost:8080/$admin
 
 That's it!  Now you can run:
 
 * `gulp clean`
+* `gulp build` build the application but do not watch for file changes
 * `gulp watch` build the application and watch for any changes
 * `gulp watchrun` watch task and run a local server to view your app on `[localhost:8080](http://localhost:8080)`
+* `gulp package` coming soon: used to package up the application for deployment
 
 
 Project structure
