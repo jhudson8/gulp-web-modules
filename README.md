@@ -1,8 +1,8 @@
 gulp-web-modules
 ================
 
-A set of gulp tasks that that make modular development of javascript web applications easy.
-* build pricess which compiles uses [browserify](http://browserify.org/) for javascript files within defined "sections" for synchronous access with "section" javascript wrapped in [requirejs](http://requirejs.org/) define functions for asynchronous "section" access.
+A set of gulp tasks that that make modular development of javascript web applications easy.  It provides:
+* build process which compiles using [browserify](http://browserify.org/) for javascript files within defined "sections" for synchronous access and each "section" generated javascript code wrapped in [requirejs](http://requirejs.org/) define functions for asynchronous "section" access.
 * a development server which serves your application and mock files but can also be plugged in for enhanced functionality
 * predefined gulp tasks to allow you to be developing your application with no setup time
 * deployment type specific configuration injection from a separate json configuation file
@@ -167,3 +167,12 @@ View the [source code](https://github.com/jhudson8/gulp-web-modules/tree/master/
 * `npm install`
 * `gulp watchrun`
 * `browse to [localhost:8080](http://localhost:8080)`
+
+Dev Server
+===============
+A server is also included to make viewing your application easy.  It has the ability to return mock files an a simple plugin architecture to
+enhance it for your own needs.
+
+To include the ability to serve out mock files, see the [simple example gulpfile](https://github.com/jhudson8/gulp-web-modules/blob/master/example/gulpfile.js#L12)
+
+By default this starts with the mock server disabled but can be enabled by viewing localhost:8080/$admin
