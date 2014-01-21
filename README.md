@@ -14,7 +14,6 @@ While these tasks do add a small amount of code to your application, it is only 
 
 Quick Install
 =================
-This module can inject targets into your gulpfile ('clear', 'build', 'watch', 'package')
 
 Add this to package.json
 ```json
@@ -38,7 +37,7 @@ gulpWebModules({
 }).injectTasks(gulp);
 ```
 
-Execute the `jumpstart` task
+Execute the `jumpstart` task to build a boilerplate application
 ```
 gulp jumpstart
 ```
