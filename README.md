@@ -84,11 +84,11 @@ public
 Module and section exports
 ===============
 
-inter-section dependencies (asynchronous using requirejs)
+inter-section dependencies (requirejs)
 --------------
 You can asynchronously retrieve another section's exports using `requireSection`
 
-`requireSection('another-section', function(sectionExports) { ... } )` will execute the callback function with the exports from the section located in `sections/another-section`.
+`requireSection('{section name}', function(sectionExports) { ... } )` will execute the callback function with the exports from the section located in `sections/{section name}`.
 ```javascript
 // base section entry point (sections/base/index.js)
 // will be executed when this section is referenced
@@ -103,13 +103,13 @@ requireSection('another-section', function(anotherSectionExports) {
 global.somethingReallyImportant = 'hello';
 ```
 
-intra-section (module) dependencies (synchronous using browserify)
+intra-section (module) dependencies (browserify)
 -------------
-Intra-section modules should be treated basically the same as node modules.  These will all be packaged in the same javascript file using browserify and can be accessed synchronously.
+You can synchronously retrieve another module's exports using `requre`
 
-If the javascript files are within the same section (within the same directory under ./sections/)
+Intra-section modules should be treated basically the same as node modules as long as they are with the same directory under `./sections`.  These will all be packaged in the same javascript file using browserify.
 
-`require('./another-module')` will reference a sibling javascript file named `another-module.js`.
+`require('./{relative file name}')` will reference a sibling javascript file named `{relative file name}.js`.
 ```javascript
 // example index.js (sections/another-section/index.js)
 var somethingImportant = require('./another-module').getSomethingImportant();
@@ -131,7 +131,7 @@ An application with the examples above will alert "hello".  This is because
 * the application base section sets the global value `somethingReallyImportant` to `hello`
 * the application base section makes an async reference to `another-section` and alerts the section export value `somethingImportant`
 * the `another-section` section base module calls the exported function `getSomethingImportant` from a sibling module called `another-module`
-* the `another-section` base module sets the value as `somethingImportant` in `sessionExports`
+* the `another-section` base module sets the value as `somethingImportant` in `section.exports`
 * the `another-module` module implements the `getSomethingImportant` by returning the global value `somethingReallyImport` (which was set in the base module)
 
 While the example is a little silly, hopefully it demonstrates how modules and sections can talk to each other.
@@ -162,15 +162,6 @@ Other gulp plugins can be hooked into the build process.  In fact, the example r
 Global Javascript Libraries
 ==============
 Any javascript files included in the ``lib` directory will be copied to the base section file so the only file that needs to be referenced from your html file is the base section javascript file.  The example referenced below uses this directory to include the react.js code.
-
-Play with the example
-===============
-View the [source code](https://github.com/jhudson8/gulp-web-modules/tree/master/example)
-* `git clone git@github.com:jhudson8/gulp-web-modules.git`
-* `cd gulp-web-modules/example/`
-* `npm install`
-* `gulp watchrun`
-* `browse to [localhost:8080](http://localhost:8080)`
 
 Dev Server
 ===============
