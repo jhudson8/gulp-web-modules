@@ -1,0 +1,9 @@
+
+{{#if isPrimary}}
+  if (typeof self === 'undefined') { var self = (typeof window !== 'undefined') ? window : {}; }
+  self.config = {{{config}}}
+  function requireSection (name, callback) { var names = Array.isArray(name) ? name : [name]; for (var i=0; i<names.length; i++) { names[i] = 'sections/' + names[i]; }
+  require(names, callback); }
+{{else}}
+  define(function() { var section = { exports: {} };
+{{/if}}

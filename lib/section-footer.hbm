@@ -1,0 +1,4 @@
+
+{{#unless isPrimary}}
+return section.exports; });
+{{/unless}}
