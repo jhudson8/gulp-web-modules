@@ -18,8 +18,8 @@ Quick Install
 Add this to package.json
 ```json
   "devDependencies": {
-    "gulp": "...",
-    "gulp-web-modules": "..."
+    "gulp": "*",
+    "gulp-web-modules": "*"
   }
 ```
 
