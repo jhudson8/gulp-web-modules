@@ -37,6 +37,11 @@ gulpWebModules({
 }).injectTasks(gulp);
 ```
 
+Install the new dependency
+```
+npm install
+```
+
 Execute the `jumpstart` task to build a boilerplate application
 ```
 gulp jumpstart
@@ -161,7 +166,7 @@ Other gulp plugins can be hooked into the build process.  In fact, the example r
 
 Global Javascript Libraries
 ==============
-Any javascript files included in the ``lib` directory will be copied to the base section file so the only file that needs to be referenced from your html file is the base section javascript file.  The example referenced below uses this directory to include the react.js code.
+Any javascript files included in the `lib` directory will be copied to the base section file so the only file that needs to be referenced from your html file is the base section javascript file.  The example referenced below uses this directory to include the react.js code.
 
 Dev Server
 ===============
