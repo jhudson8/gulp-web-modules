@@ -166,7 +166,7 @@ module.exports = function (options) {
       if (!tasks) {
         tasks = [];
         for (var i in this) {
-          if (i != 'injectTasks') {
+          if (i !== 'injectTasks' && i !== 'plugins') {
             tasks.push(i);
           }
         }
@@ -180,6 +180,8 @@ module.exports = function (options) {
           throw "invalid gulp-web-module task '" + task + "'";
         }
       }
+
+      return this;
     },
 
     build: function () {
@@ -210,6 +212,10 @@ module.exports = function (options) {
     jumpstart: function() {
       gulp.src(__dirname + '/lib/template/*/**').pipe(gulp.dest('./'));
       console.log(__dirname);
+    },
+
+    plugins: {
+      handlebars: require('./plugins/handlebars')
     }
   }
 }

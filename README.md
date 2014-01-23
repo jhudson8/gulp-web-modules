@@ -7,9 +7,9 @@ A set of gulp tasks that that make modular development of javascript web applica
 * predefined gulp tasks to allow you to be developing your application with no setup time
 * deployment type specific configuration injection from a separate json configuation file
 
-While these tasks do add a small amount of code to your application, it is only in the areas of javascript file modularization - no assumptions are being made about what technologies are used to actually create your application.  It is basically automatically building in references to browserify when it makes sense and [requirejs](http://requirejs.org/) when it makes sense.
-* browserify to modularize javascript files but allow them to be compiled to a single javascript file to reduce download overhead and provide synchronous code access
-* requirejs to keep you from having to create a single artifact that will serve the whole single page application
+While these tasks do add a small amount of code to your application, it is only in the areas of javascript file modularization - no assumptions are being made about what technologies are used to actually create your application.  It is basically automatically building in references to [browserify](http://browserify.org/) when it makes sense and [requirejs](http://requirejs.org/) when it makes sense.
+* [browserify](http://browserify.org/) to modularize javascript files but allow them to be compiled to a single javascript file to reduce download overhead and provide synchronous code access
+* [requirejs](http://requirejs.org/) to keep you from having to create a single artifact that will serve the whole single page application
 
 
 Quick Install
@@ -144,7 +144,9 @@ While the example is a little silly, hopefully it demonstrates how modules and s
 Export Scope
 ------------
 ```module.exports```: each module can expose content that can be access synchronously by other files within the same section
+
 ```section.exports```: is used to add conent to the callback parameter when a section is loaded asynchronously
+
 ```global```: should be populated for any module to access at any time (as long as the section has been loaded which populates it)
 
 Lifecycle Hooks
@@ -172,7 +174,3 @@ Dev Server
 ===============
 A server is also included to make viewing your application easy.  It has the ability to return mock files an a simple plugin architecture to
 enhance it for your own needs.
-
-To include the ability to serve out mock files, see the [simple example gulpfile](https://github.com/jhudson8/gulp-web-modules/blob/master/example/gulpfile.js#L12)
-
-By default this starts with the mock server disabled but can be enabled by viewing localhost:8080/$admin
