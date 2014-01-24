@@ -60,6 +60,7 @@ function initOptions(options) {
   if (typeof options.plugins === 'function') {
     options.plugins = options.plugins(pluginFactory);
   }
+  options.buildType = gulp.env.type || 'dev';
   
   var _defaults = {
     plugins: [],
@@ -112,7 +113,16 @@ function _clean(src) {
 module.exports = function (options) {
   options = initOptions(options);
 
-  function buildSections(_callback) {
+  function build(options) {
+      buildSections(options);
+      buildPublic(options);
+  }
+
+  function buildPublic(options) {
+    require('./lib/public-builder')(options).build();
+  }
+
+  function buildSections(options, _callback) {
     var sectionDirs = fs.readdirSync('./sections'),
         filePrefix = './sections',
         sectionBuilder = require('./lib/section-builder'),
@@ -122,7 +132,7 @@ module.exports = function (options) {
       var name = sectionDirs[i];
       options = merge(options, {
         srcPath: filePrefix + '/' + name + '/',
-        tmpPath: 'build/_tmp/' + name + '/',
+        tmpPath: 'build/_tmp/sections/' + name + '/',
         buildPath: './build/sections/',
         isBase: (name === 'base'),
         section: name
@@ -157,23 +167,17 @@ module.exports = function (options) {
     },
 
     build: function () {
-      options = initOptions(options);
-      options.buildType = gulp.env.type || 'dev',
-      buildSections();
+      build(options);
     },
 
-    buildSections: buildSections,
-
     watch: function () {
-      builder(merge(options, {
-        buildType: gulp.env.type || 'dev',
+      build(merge(options, {
         watch: true
       }));
     },
 
     watchrun: function () {
-      builder(merge(options, {
-        buildType: gulp.env.type || 'dev',
+      build(merge(options, {
         watch: true
       }));
       initServer(options).start();

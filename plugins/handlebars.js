@@ -12,7 +12,7 @@ var through = require('through2'),
 module.exports = function(options) {
   options = options || {};
   var ext = options.ext || 'hbs',
-      fileName = options.fileName || 'templates.js';
+      fileName = options.fileName || 'templates';
 
   function precompile(file) {
     if (file.isStream()) {
@@ -20,46 +20,45 @@ module.exports = function(options) {
     }
 
     var filePath = path.relative(file.base, file.path).replace(/\.[^/.]+$/, ""),
-        templateContent = handlebars.precompile(file.contents.toString('utf8'));
+        templateContent = handlebars.precompile(file.contents.toString('utf8')),
+        match = filePath.match(/([^\/]*)\/(.+)/);
+    if (match && match[1] === fileName) {
+      filePath = match[2];
+    }
     return ('templates[\'' + filePath + '\'] = Handlebars.template(' + templateContent + ');');
   }
-
-  var buffer = [],
-      firstFile;
-
-  var handler = through.obj(function(file, enc, callback) {
-      var extLength = ext.length,
-          extIndex = file.path.indexOf('.' + ext);
-
-      if (extIndex === -1) {
-        // not a template files
-        this.push(file);
-        return callback();
-      }
-
-      if (!firstFile) firstFile = file;
-      buffer.push(precompile(file));
-      callback();
-    },
-
-    function(callback) {
-      if (firstFile) {
-        var templatesFile = new File({
-          cwd: firstFile.cwd,
-          base: firstFile.base,
-          path: path.join(firstFile.base, fileName),
-          contents: new Buffer(prepareTemplate(buffer))
-        });
-        this.push(templatesFile);
-      }
-      callback();
-    }
-  );
 
   return {
     javascriptGlob: '**/*.hbs',
     beforeBrowserify: function(options, pipeline) {
-      return pipeline.pipe(handler);
+      var buffer = [],
+          firstFile;
+
+      // return pipeline.pipe(handler);
+      // return pipeline.pipe(handler2);
+      return pipeline.pipe(through.obj(function(file, enc, cb) {
+        if (file.path.indexOf('.' + ext) === -1) {
+          // not a template files
+          this.push(file);
+          return cb();
+        }
+
+        if (!firstFile) firstFile = file;
+        buffer.push(precompile(file));
+        cb();
+      },
+      function(cb) {
+        if (firstFile) {
+          var templatesFile = new File({
+            cwd: firstFile.cwd,
+            base: firstFile.base,
+            path: path.join(firstFile.base, fileName + '.js'),
+            contents: new Buffer(prepareTemplate(buffer))
+          });
+          this.push(templatesFile);
+        }
+        cb();
+      }));
     }
   }
 }
