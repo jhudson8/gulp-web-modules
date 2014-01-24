@@ -27,8 +27,7 @@ module.exports = function(options) {
   var buffer = [],
       firstFile;
 
-  return through.obj(function(file, enc, callback) {
-
+  var handler = through.obj(function(file, enc, callback) {
       var extLength = ext.length,
           extIndex = file.path.indexOf('.' + ext);
 
@@ -56,6 +55,13 @@ module.exports = function(options) {
       callback();
     }
   );
+
+  return {
+    javascriptGlob: '**/*.hbs',
+    beforeBrowserify: function(options, pipeline) {
+      return pipeline.pipe(handler);
+    }
+  }
 }
 
 function prepareTemplate(buffer) {
