@@ -1,5 +1,5 @@
 
-{{#if isPrimary}}
+{{#if isBase}}
   if (typeof self === 'undefined') { var self = (typeof window !== 'undefined') ? window : {}; }
   {{#if config}}
     self.config = {{{config}}}
