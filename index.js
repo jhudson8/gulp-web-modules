@@ -3,9 +3,19 @@ var builder = require('./lib/builder'),
   clean = require('gulp-clean'),
   through = require("through2"),
   path = require('path'),
-  lifecycleEvents = ['beforeBrowserify', 'afterBrowserify', 'beforeDestination', 'afterDestination'],
+  join = require('./lib/async-join'),
+  fs = require('fs')
   plugins = [],
   devServerPlugins = [];
+
+var pluginFactory = {},
+    plugins = ['handlebars'];
+for (var i in plugins) {
+  var key = plugins[i];
+  pluginFactory[key] = function(options) {
+    return require('./plugins/' + key)(options);
+  }
+}
 
 function initServer(options) {
   // these server plugins were registered with web-module plugins
@@ -30,32 +40,8 @@ function initServer(options) {
   return server;
 }
 
-function checkOptions(options, mergeOptions) {
-  options = options || {};
-  var nop = function () {
-    return through(function (data) {
-      this.emit('data', data);
-    });
-  },
-    _defaults = {
-      entry: 'index.js',
-      primarySection: 'base',
-      buildPath: 'build',
-      defaultServResource: 'index.html',
-      port: 8080,
-      proxy: function (gulpOptions, requestOptions, callback) {
-        callback();
-      }
-    }
-  for (var i in _defaults) {
-    if (options[i] === undefined) {
-      options[i] = _defaults[i];
-    }
-  }
-  if (!_defaults.entry.match(/.*\.js/)) {
-    _defaults.entry += '.js';
-  }
-  if (mergeOptions) {
+function merge(options, mergeOptions) {
+  if (mergeOptions && options) {
     var rtn = {};
     for (var name in options) {
       rtn[name] = options[name];
@@ -64,77 +50,42 @@ function checkOptions(options, mergeOptions) {
       rtn[name] = mergeOptions[name];
     }
     return rtn;
+  } else {
+    return options || mergeOptions;
   }
-  return options;
 }
 
-function normalizePlugins(plugins) {
-  var _plugins = {}
-  // convert all plugins entries to an array of plugin functions organized by lifecycle event
-  for (var i in plugins) {
-    var plugin = plugins[i];
-    for (var j in lifecycleEvents) {
-      var eventName = lifecycleEvents[j],
-        lifecyclePlugin = plugin[eventName];
-      if (lifecyclePlugin) {
-        // a plugin exists for the current event
-        var pluginPipeline = _plugins[eventName];
-        if (!pluginPipeline) {
-          // initialize
-          _plugins[eventName] = [lifecyclePlugin];
-        } else {
-          // hook it into the pipeline
-          pluginPipeline.push(lifecyclePlugin);
-        }
-      }
+function initOptions(options) {
+  options = options || {};
+  if (typeof options.plugins === 'function') {
+    options.plugins = options.plugins(pluginFactory);
+  }
+  
+  var _defaults = {
+    plugins: [],
+    entry: 'index.js',
+    primarySection: 'base',
+    buildPath: 'build',
+    defaultServResource: 'index.html',
+    port: 8080,
+    proxy: function (gulpOptions, requestOptions, callback) {
+      callback();
+    }
+  }
+  for (var i in _defaults) {
+    if (options[i] === undefined) {
+      options[i] = _defaults[i];
     }
   }
 
-  function convertPlugins(eventPlugins) {
-    return function () {
-      var pipeline;
-      for (var i in eventPlugins) {
-        var plugin = eventPlugins[i];
-        if (!pipeline) {
-          pipeline = plugin();
-        } else {
-          pipeline = pipeline.pipe(plugin());
-        }
-      }
-      return pipeline;
-    }
-  }
-
-  // replace with a function to initialize and pipe all plugins
-  for (var i in _plugins) {
-    _plugins[i] = convertPlugins(_plugins[i]);
-  }
-  return _plugins;
-}
-
-function initPlugins(options) {
-  var _plugins = options.plugins || [];
-
-  // add direct lifecicye events from options as the first plugin
-  var rootPlugin = {};
-  for (var i in lifecycleEvents) {
-    var eventName = lifecycleEvents[i];
-    rootPlugin[eventName] = options[eventName];
-  }
-  plugins.push(rootPlugin);
-
-  // add all registered plugins
-  for (var i in _plugins) {
-    var plugin = _plugins[i];
-    plugins.push(plugin);
+  var devServerPlugins = [];
+  // proxy all dev server plugins
+  for (var i in options.plugins) {
+    var plugin = options.plugins[i];
     if (plugin.devServer) {
       devServerPlugins.push(plugin.devServer);
     }
   }
-
-  // normalize the plugins into a single piped object
-  options.normalizedPlugins = normalizePlugins(plugins);
-
 
   // add the root devserver plugin
   devServerPlugins.push({
@@ -149,6 +100,7 @@ function initPlugins(options) {
     }
   });
   devServerPlugins.push(require('./lib/dev-server/admin-config'));
+  return options;
 }
 
 function _clean(src) {
@@ -158,8 +110,28 @@ function _clean(src) {
 }
 
 module.exports = function (options) {
-  options = checkOptions(options);
-  initPlugins(options);
+  options = initOptions(options);
+
+  function buildSections(_callback) {
+    var sectionDirs = fs.readdirSync('./sections'),
+        filePrefix = './sections',
+        sectionBuilder = require('./lib/section-builder'),
+        blocker = join(_callback);
+
+    for (var i in sectionDirs) {
+      var name = sectionDirs[i];
+      options = merge(options, {
+        srcPath: filePrefix + '/' + name + '/',
+        tmpPath: 'build/_tmp/' + name + '/',
+        buildPath: './build/sections/',
+        isBase: (name === 'base'),
+        section: name
+      });
+
+      sectionBuilder(options, blocker.newCallback())();
+    }
+    blocker.complete();
+  }
 
   return {
     injectTasks: function (gulp, tasks) {
@@ -185,23 +157,25 @@ module.exports = function (options) {
     },
 
     build: function () {
-      builder(checkOptions(options, {
-        buildType: gulp.env.type || 'dev'
+      options = initOptions(options);
+      options.buildType = gulp.env.type || 'dev',
+      buildSections();
+    },
+
+    buildSections: buildSections,
+
+    watch: function () {
+      builder(merge(options, {
+        buildType: gulp.env.type || 'dev',
+        watch: true
       }));
     },
 
-    watch: function () {
-      builder(checkOptions(options, checkOptions(options, {
-        buildType: gulp.env.type || 'dev',
-        watch: true
-      })));
-    },
-
     watchrun: function () {
-      builder(checkOptions(options, checkOptions(options, {
+      builder(merge(options, {
         buildType: gulp.env.type || 'dev',
         watch: true
-      })));
+      }));
       initServer(options).start();
     },
 
