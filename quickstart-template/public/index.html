@@ -34,28 +34,40 @@
       gulp-web-modules is not an application framework but it does provide the infrastructure to create a modular application.  This small
       example app is used to demonstrate available functionality.  The message below is dynamically injected into this page.  See below the
       message to understand this.
-      <div id="message" class="label label-warning"></div>
+      <div id="message" class="label-warning"></div>
     </p>
     <p>
-      Below is a message that is injected into this page using javascript.  The point is to demonstrate the capabilities in a simple way.
+      The message above is injected into this page using javascript.  The point is to demonstrate available capabilities in a simple way.
       <h4>sections/base/index.js</h4>
 <pre>
+/** @jsx React.DOM */
+
 global.firstName = 'John';
 
 requireSection('foo', function(exports) {
   var message = exports.getMessage();
 
-  var formatter = require('./message-formatter');
+  var formatter = require('./message-formatter'),
+      formattedMessage = formatter(message);
 
-  document.getElementById('message').innerText = formatter(message);
+  var HelloMessage = React.createClass({
+    render: function() {
+      return &lt;div&gt;{'Hello ' + this.props.message}&lt;/div&gt;;
+    }
+  });
+
+  React.renderComponent(&lt;HelloMessage message={formattedMessage} /&gt;, document.getElementById('message'));
 });
+
 </pre>
       <ul>
+        <li>Uses the <code>/** @jsx React.DOM */</code> to indicate that the jsx parser should be used for this file</li>
         <li>Set the global attribute <code>firstName</code> as <code>John</code> which will be available from any section code</li>
         <li><code>requireSection</code> is used to <em>asynchronously</em> retrieve the exports from another section called <code>foo</code></li>
         <li>A message is retrieved using the <code>getMessage</code> function that was inserted into the section exports</li>
         <li><code>require</code> is used to <em>synchronously</em> retrieve a message formatter function from a sibling javascript file called <code>message-formatter.js</code></li>
-        <li>The formatted message is set within the DOM of this page</li>
+        <li>The <code>HelloMessage</code> Reactjs component is defined</li>
+        <li><code>React.renderComponent</code> is used to render to the element with id=message using the <code>formattedMessage</code> as the message</li>
       </ul>
 
       <h4>sections/base/message-formatter.js</h4>

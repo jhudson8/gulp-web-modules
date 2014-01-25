@@ -1,4 +1,6 @@
-// main entry point for your application
+/** @jsx React.DOM */
+
+// /sections/base/index.js is the main entry point for your application
 
 // any file in your project can see values in "global"
 global.firstName = 'John';
@@ -8,8 +10,15 @@ requireSection('foo', function(exports) {
   var message = exports.getMessage();
 
   // any javascript file within sections/base can be required synchronously just as if it were a node module
-  var formatter = require('./message-formatter');
+  var formatter = require('./message-formatter'),
+      formattedMessage = formatter(message);
 
-  // the "exports" value is populated using session.exports (see sections/foo/index.js)
-  document.getElementById('message').innerText = formatter(message);
+  // use the reactjs plugin to convert this jsx to javascript when building
+  var HelloMessage = React.createClass({
+    render: function() {
+      return <div>{'Hello ' + this.props.message}</div>;
+    }
+  });
+
+  React.renderComponent(<HelloMessage message={formattedMessage} />, document.getElementById('message'));
 });
