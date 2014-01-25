@@ -32,6 +32,8 @@ var gulp = require('gulp')
     modules = require('gulp-web-modules');
 
 var modules = require('gulp-web-modules')({
+
+  // not required if you do not with to serve out mock files
   devServer: {
     mocks: {
       prefix: '/services/'
