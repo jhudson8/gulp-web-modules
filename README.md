@@ -18,21 +18,33 @@ Quick Install
 Add this to package.json
 ```json
   "devDependencies": {
-    "gulp": "*",
-    "gulp-web-modules": "*"
+    "gulp": "~3.5",
+    "gulp-web-modules": "~0.1",
+    // the following are only required for optional plugins
+    "handlebars": "~1.3",
+    "gulp-react": "~0.1"
   }
 ```
 
 Add the builder tasks to your gulpfile.  This is a sample gulpfile configured to serve out mocks as well
 ```javascript
 var gulp = require('gulp')
-    gulpWebModules = require('gulp-web-modules');
+    modules = require('gulp-web-modules');
 
-gulpWebModules({
+var modules = require('gulp-web-modules')({
   devServer: {
     mocks: {
       prefix: '/services/'
     }
+  },
+
+  // plugins are not required for your application but the quickstart example uses them
+  plugins: function(plugins) {
+    return [
+      plugins.handlebars(require('handlebars')),
+      plugins.react(require('gulp-react')),
+      plugins.lib()
+    ]
   }
 }).injectTasks(gulp);
 ```
@@ -149,26 +161,29 @@ Export Scope
 
 ```global```: should be populated for any module to access at any time (as long as the section has been loaded which populates it)
 
-Lifecycle Hooks
+
+Plugins
 ===============
-Other gulp plugins can be hooked into the build process.  In fact, the example referenced below adds [ReactJS](http://facebook.github.io/react/) into the build cycle so all [.jsx](http://facebook.github.io/react/docs/jsx-in-depth.html) files are automatically converted.  See more in the Wiki but it's as simple as
+Plugins can be hooked into the build process.  In fact, the example referenced below adds [ReactJS](http://facebook.github.io/react/) into the build cycle so all [.jsx](http://facebook.github.io/react/docs/jsx-in-depth.html) files are automatically converted.  See more in the Wiki but it's as simple as
 ```javascript
    var gulp = require('gulp')
        modules = require('gulp-web-modules'),
        react = require('gulp-react');
 
    modules({
-     beforeBrowserify: function() {
-       // compile all .jsx modules to javascript
-       return react();
+     plugins: function(plugins) {
+       plugins.react()
      }
    }).injectTasks(gulp);
 
 ```
+There are a few certain plugins that come with gulp-web-modules such as a handlebars plugin and a react plugin.  But the are not difficult to create.  View the [react plugin](https://github.com/jhudson8/gulp-web-modules/blob/master/plugins/react.js) or the wiki for a better understanding.
+
 
 Global Javascript Libraries
 ==============
 Any javascript files included in the `lib` directory will be copied to the base section file so the only file that needs to be referenced from your html file is the base section javascript file.  The example referenced below uses this directory to include the react.js code.
+
 
 Dev Server
 ===============
