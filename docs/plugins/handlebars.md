@@ -4,11 +4,13 @@ Plugin: handlebars
 Precompile all [handlebars](http://handlebarsjs.com/) templates (`.hbs` extension) within the `templates` directory to a module in the current section called `templates`.
 
 For example, with a project structure like this:
+```
     sections
       > base
         > index.js
         > templates
           > foo.hbs
+```
 
 I would be able to execute the `foo.hbs` template with the following code from `index.js`
 ```javascript
