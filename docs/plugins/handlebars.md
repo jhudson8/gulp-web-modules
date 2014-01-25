@@ -23,7 +23,7 @@ I would be able to execute the `foo.hbs` template with the following code from `
 Options
 -----------
 * ext: (default "hbs") the handlebars file extension
-* fileName: the name of the module to be created and the top level directory name where the templates should be saved
+* fileName: (default "templates") the name of the module to be created and the top level directory name where the templates should be saved
 
 Gulpfile
 -----------
