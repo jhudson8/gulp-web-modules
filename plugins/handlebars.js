@@ -1,7 +1,7 @@
 //
 //  Precompile all handlebars templates matcing the provided file extension (options.ext or "hbs") to
 //  the file identified by options.fileName or "templates.js".  A handlebars object must be provided
-// as it is not a dependency of this project.
+//  as it is not a dependency of this project.
 //
 var through = require('through2'),
     fs = require('fs'),
@@ -34,8 +34,6 @@ module.exports = function(Handlebars, options) {
       var buffer = [],
           firstFile;
 
-      // return pipeline.pipe(handler);
-      // return pipeline.pipe(handler2);
       return pipeline.pipe(through.obj(function(file, enc, cb) {
         if (file.path.indexOf('.' + ext) === -1) {
           // not a template files
