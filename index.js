@@ -9,17 +9,42 @@ var builder = require('./lib/builder'),
   devServerPlugins = [];
 
 var pluginFactory = {},
-    plugins = ['handlebars'];
-for (var i in plugins) {
-  var key = plugins[i];
-  pluginFactory[key] = function(options) {
-    return require('./plugins/' + key)(options);
-  }
+    knownPlugins = ['handlebars', 'lib', 'react'];
+for (var i in knownPlugins) {
+  var key = knownPlugins[i];
+  (function(key) {
+    pluginFactory[key] = function(options) {
+      return require('./plugins/' + key)(options);
+    }
+  })(key);
 }
 
 function initServer(options) {
+  var devServerPlugins = [];
+  // proxy all dev server plugins
+  for (var i in options.plugins) {
+    var plugin = options.plugins[i];
+    if (plugin.devServer) {
+      devServerPlugins.push(plugin.devServer);
+    }
+  }
+
+  // add the root devserver plugin
+  devServerPlugins.push({
+    onRequest: function (requestOptions, pluginOptions, callback) {
+      var uri = requestOptions.uri;
+      if (uri === '/') {
+        uri = options.defaultServResource;
+      }
+      callback({
+        fileName: path.join(requestOptions.base, uri)
+      })
+    }
+  });
+  devServerPlugins.push(require('./lib/dev-server/admin-config'));
+
   // these server plugins were registered with web-module plugins
-  var server = require('./lib/dev-server')(checkOptions(options, {
+  var server = require('./lib/dev-server')(merge(options, {
     plugins: devServerPlugins
   }));
 
@@ -78,29 +103,6 @@ function initOptions(options) {
       options[i] = _defaults[i];
     }
   }
-
-  var devServerPlugins = [];
-  // proxy all dev server plugins
-  for (var i in options.plugins) {
-    var plugin = options.plugins[i];
-    if (plugin.devServer) {
-      devServerPlugins.push(plugin.devServer);
-    }
-  }
-
-  // add the root devserver plugin
-  devServerPlugins.push({
-    onRequest: function (requestOptions, pluginOptions, callback) {
-      var uri = requestOptions.uri;
-      if (uri === '/') {
-        uri = options.defaultServResource;
-      }
-      callback({
-        fileName: path.join(requestOptions.base, uri)
-      })
-    }
-  });
-  devServerPlugins.push(require('./lib/dev-server/admin-config'));
   return options;
 }
 
@@ -188,8 +190,7 @@ module.exports = function (options) {
     },
 
     jumpstart: function() {
-      gulp.src(__dirname + '/lib/template/*/**').pipe(gulp.dest('./'));
-      console.log(__dirname);
+      gulp.src(__dirname + '/quickstart-template/*/**').pipe(gulp.dest('./'));
     },
 
     plugins: {

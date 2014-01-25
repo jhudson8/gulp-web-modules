@@ -1,0 +1,14 @@
+{
+  "name": "gulp-web-modules-example",
+  "description": "Gulp Web Modules Example",
+  "author": "Joe Hudson <joehud@gmail.com>",
+  "dependencies": {
+  },
+  "engine": "node 0.4.1",
+  "devDependencies": {
+    "gulp": "~3.3.4",
+    "gulp-react": "~0.1",
+    "gulp-web-modules": "*",
+    "handlebars": "~1.3"
+  }
+}
