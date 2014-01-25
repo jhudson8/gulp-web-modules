@@ -9,22 +9,87 @@
       Jumpstart project
     </h1>
 
+
+    <h2>File Structure</h2>
+    <dl>
+      <dt>public</td>
+        <dd>Where this index.html file is.  All resources that are to be copied to the build root should be placed here.</dd>
+      <dt>config</dt>
+        <dd>deployment specific config data will be injected into your application available as <code>global.config</code>.  When running the dev server, the config data used is <code>config/dev.json</code></dd>
+      <dt>sections</dt>
+        <dd>the root of all section content within your application.  Each directory under here will represent a unique section.  Each section should have an index.js which will be the entry point (executed when the section is imported into the running app).  All of the javascript files will be combined to a single javascript file (<code>sections/{section name}.js</code>). The section called <code>base</code> is a special section name that is required.  <code>sections/base/index.js</code> will be your application entry point (it will be executed when you include <code>sections/base.js</code> from your html container page).</dd>
+      <dt>lib</dt>
+        <dd>Since you are using the <code>lib</code> plugin (if you followed the README.md), any files placed here will have their content be injected into the application base javascript file without any scoping</dd>
+      <dt>build</dt>
+        <dd>This is where the application builds to.  The dev server will expose content from this directory.</dd>
+      <dt>dev</dt>
+        <dd>The dev server can serve out mock files.  By default, these will be located in <code>dev/mocks</code>.</dd>
+    </dt>
+
+
+
+
+    <h2>What's going on in this application?</h2>
     <p>
-      <h2>File Structure</h2>
-      <dl>
-        <dt>public</td>
-          <dd>Where this index.html file is.  All resources that are to be copied to the build root should be placed here.</dd>
-        <dt>config</dt>
-          <dd>deployment specific config data will be injected into your application available as <code>global.config</code>.  When running the dev server, the config data used is <code>config/dev.json</code></dd>
-        <dt>sections</dt>
-          <dd>the root of all section content within your application.  Each directory under here will represent a unique section.  Each section should have an index.js which will be the entry point (executed when the section is imported into the running app).  All of the javascript files will be combined to a single javascript file (<code>sections/{section name}.js</code>). The section called <code>base</code> is a special section name that is required.  <code>sections/base/index.js</code> will be your application entry point (it will be executed when you include <code>sections/base.js</code> from your html container page).</dd>
-        <dt>lib</dt>
-          <dd>Since you are using the <code>lib</code> plugin (if you followed the README.md), any files placed here will have their content be injected into the application base javascript file without any scoping</dd>
-        <dt>build</dt>
-          <dd>This is where the application builds to.  The dev server will expose content from this directory.</dd>
-        <dt>dev</dt>
-          <dd>The dev server can serve out mock files.  By default, these will be located in <code>dev/mocks</code>.</dd>
-      </dt>
+      gulp-web-modules is not an application framework but it does provide the infrastructure to create a modular application.  This small
+      example app is used to demonstrate available functionality.  The message below is dynamically injected into this page.  See below the
+      message to understand this.
+      <div id="message" class="label label-warning"></div>
+    </p>
+    <p>
+      Below is a message that is injected into this page using javascript.  The point is to demonstrate the capabilities in a simple way.
+      <h4>sections/base/index.js</h4>
+<pre>
+global.firstName = 'John';
+
+requireSection('foo', function(exports) {
+  var message = exports.getMessage();
+
+  var formatter = require('./message-formatter');
+
+  document.getElementById('message').innerText = formatter(message);
+});
+</pre>
+      <ul>
+        <li>Set the global attribute <code>firstName</code> as <code>John</code> which will be available from any section code</li>
+        <li><code>requireSection</code> is used to <em>asynchronously</em> retrieve the exports from another section called <code>foo</code></li>
+        <li>A message is retrieved using the <code>getMessage</code> function that was inserted into the section exports</li>
+        <li><code>require</code> is used to <em>synchronously</em> retrieve a message formatter function from a sibling javascript file called <code>message-formatter.js</code></li>
+        <li>The formatted message is set within the DOM of this page</li>
+      </ul>
+
+      <h4>sections/base/message-formatter.js</h4>
+<pre>
+module.exports = function(message) {
+  return message.toUpperCase();
+}
+</pre>
+      <ul>
+        <li>Uses <code>module.exports</code> to expose a single function used to format a message (to upper case)</li>
+      </ul>
+
+      <h4>sections/foo/index.js</h4>
+<pre>
+var templates = require('./templates');
+
+section.exports.getMessage = function(message) {
+
+  var lastName = global.config.lastName;
+
+  return templates.message({
+    firstName: global.firstName,
+    lastName: lastName
+  });
+};
+</pre>
+      <ul>
+        <li>Adds a function called <code>getMessage</code> to <code>section.exports</code>.  This is the object provided as the parameter to the async callback of the <code>requireSection</code> call.</li>
+        <li>Gets the <code>lastName</code> from <code>global.config</code> which is injected into the application code from <code>config/dev.json</code></li>
+        <li>Gets the <code>firstName</code> from <code>global.firstName</code> which was set by <code>sections/base/index.js</code></li>
+        <li>References a sibling module <code>templates</code> which will be created by precompiling all <code>.hbs</code> templates into a single module.  This will happen if the handlebars plugin is added to the gulpfile (see README.md)</li>
+        <li>The <code>getMessage</code> is implemented by returning the result of the handlebars template (<code>sections/foo/templates/message.hbs</code>) execution</li>
+      </ul>
+
 
       <h2>Dev Server</h2>
       <p>
@@ -52,39 +117,6 @@
           <li><code>dev/mocks/user/1_POST.json</code></li>
           <li><code>dev/mocks/user_POST.json</code></li>
         </ol>
-      </p>
-
-      <h2>What's going on in this application?</h2>
-      <p>
-        gulp-web-modules is not an application framework but it does provide the infrastructure to create a modular application.  This small
-        example app is used to demonstrate available functionality.  The message below is dynamically injected into this page.  See below the
-        message to understand this.
-        <div id="message" class="label label-warning"></div>
-      </p>
-      <p>
-        Below is a message that is injected into this page using javascript.  The point is to demonstrate the capabilities in a simple way.
-        <h3>sections/base/index.js</h3>
-        <ul>
-          <li>Set the global attribute <code>firstName</code> as <code>John</code> which will be available from any section code</li>
-          <li><code>requireSection</code> is used to <em>asynchronously</em> retrieve the exports from another section called <code>foo</code></li>
-          <li>A message is retrieved using the <code>getMessage</code> function that was inserted into the section exports</li>
-          <li><code>require</code> is used to <em>synchronously</em> retrieve a message formatter function from a sibling javascript file called <code>message-formatter.js</code></li>
-          <li>The formatted message is set within the DOM of this page</li>
-        </ul>
-
-        <h3>sections/base/message-formatter.js</h3>
-        <ul>
-          <li>Uses <code>module.exports</code> to expose a single function used to format a message (to upper case)</li>
-        </ul>
-
-        <h3>sections/foo/index.js</h3>
-        <ul>
-          <li>Adds a function called <code>getMessage</code> to <code>section.exports</code>.  This is the object provided as the parameter to the async callback of the <code>requireSection</code> call.</li>
-          <li>Gets the <code>lastName</code> from <code>global.config</code> which is injected into the application code from <code>config/dev.json</code></li>
-          <li>Gets the <code>firstName</code> from <code>global.firstName</code> which was set by <code>sections/base/index.js</code></li>
-          <li>References a sibling module <code>templates</code> which will be created by precompiling all <code>.hbs</code> templates into a single module.  This will happen if the handlebars plugin is added to the gulpfile (see README.md)</li>
-          <li>The <code>getMessage</code> is implemented by returning the result of the handlebars template (<code>sections/foo/templates/message.hbs</code>) execution</li>
-        </ul>
       </p>
   </body>
   <script type="text/javascript" src="sections/base.js"></script>
