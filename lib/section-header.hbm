@@ -1,11 +1,15 @@
-
 {{#if isBase}}
   if (typeof self === 'undefined') { var self = (typeof window !== 'undefined') ? window : {}; }
   {{#if config}}
     self.config = {{{config}}}
   {{/if}}
-  function requireSection (name, callback) { var names = Array.isArray(name) ? name : [name]; for (var i=0; i<names.length; i++) { names[i] = 'sections/' + names[i]; }
-  require(names, callback); }
+  function requireSection (name, callback) {
+    var names = Array.isArray(name) ? name : [name];
+    for (var i=0; i<names.length; i++) { names[i] = 'sections/' + names[i]; }
+    require(names, callback);
+  }
+
 {{else}}
-  define(function() { var section = { exports: {} };
+  define(function() { var section = {exports: {}}; 
 {{/if}}
+
