@@ -44,6 +44,25 @@ requireSection('foo', function(sessionExports) {
 });
 ```
 
+Example
+----------
+Using the directory structure described in the above example, modules could be accessed in this way
+```javascript
+// sections > foo > index.js
+var myValue = require('./package1/widget').foo();
+
+// add this value to the exports to be available when another section requires this section
+session.exports.myValue = foo;
+
+// sections > foo > package1 > widget.js
+exports = {
+  foo: function() {
+    // return a global value that was set in another module using 'global'
+    return global.foo;
+  }
+}
+```
+
 Build / Plugins
 ----------
 Each section is build independently with corresponding lifecycle events that plugins can take advantage of to customize the build.  See [the plugin docs](./plugin-api.md) for more details.  By default, all javascript resources are compiled using [browserify](http://browserify.org/) and all css resources are concatinated.  Some additional plugin used to enhance this behavor are described [here](./plugins).
