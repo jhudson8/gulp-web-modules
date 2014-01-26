@@ -1,15 +1,9 @@
 {{#if isBase}}
-  if (typeof self === 'undefined') { var self = (typeof window !== 'undefined') ? window : {}; }
-  {{#if config}}
-    self.config = {{{config}}}
-  {{/if}}
-  function requireSection (name, callback) {
-    var names = Array.isArray(name) ? name : [name];
-    for (var i=0; i<names.length; i++) { names[i] = 'sections/' + names[i]; }
-    require(names, callback);
-  }
-
+function requireSection(e,t){var n=Array.isArray(e)?e:[e];n=n.map(function(e){return"sections/"+e});require(n,t)}if(typeof self==="undefined"){var self=typeof window!=="undefined"?window:{}}
+{{#if config}}
+self.config={lastName:"Doe"};
+{{/if}}
 {{else}}
-  define(function() { var section = {exports: {}}; 
+define(function(){var section={exports:{}};
 {{/if}}
 

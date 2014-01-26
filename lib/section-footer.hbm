@@ -1,4 +1,3 @@
-
 {{#unless isBase}}
-return section.exports; });
+return section.exports})
 {{/unless}}
