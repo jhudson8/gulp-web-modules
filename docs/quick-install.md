@@ -63,3 +63,5 @@ gulp watchrun
 ```
 
 Take a look at your app on localhost:8080;  You can also turn on the mock integration by browsing to localhost:8080/$admin.
+
+See the [general documentation](./index.md) for more details.
