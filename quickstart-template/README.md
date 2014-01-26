@@ -3,6 +3,7 @@ This is the gulp-web-module quickstart application.  It assumes a gulpfile as fo
 var gulp = require('gulp')
     modules = require('gulp-web-modules');
 
+modules({
   // not required if you do not want to serve out mock files
   devServer: {
     mocks: {
