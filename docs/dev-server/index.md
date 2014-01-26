@@ -67,7 +67,7 @@ Each plugin can optionally provide a `userConfig` attribute which allows the use
 * store: hash which will be used by the admin page to set input values;  each value will be set on this hash using the defined key from the `inputs` entry.  This value should be defaulted with any options that the plugin initially uses
 
 An example from the mock server is:
-```json
+```javascript
     userConfig: {
       key: 'mock-server',
       section: 'Dev Server',
