@@ -15,6 +15,6 @@ Get More Information
 ------------
 See the [docs](./docs/index.md) to understand how to use these gulp tasks, build your modular application and use the development server.
 
-Quick Install
+Quick Start
 ------------
-View the [quick install guide](./docs/quick-install.md)
+View the [quick start guide](./docs/quick-start.md)

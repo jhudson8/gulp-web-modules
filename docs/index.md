@@ -7,4 +7,4 @@ These docs describe
 * how to use the [development server](./dev-server)
 * how to [organize your files](./file-structure.md)
 
-If you prefer to just jump right in, follow these instructions.
+If you prefer to just jump right in, follow [these instructions](./quick-start.md).
