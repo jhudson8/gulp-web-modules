@@ -23,14 +23,14 @@ Add the builder tasks to your gulpfile.  This is a sample gulpfile configured to
 var gulp = require('gulp')
     modules = require('gulp-web-modules');
 
-  // not required if you do not with to serve out mock files
+  // not required if you do not want to serve out mock files
   devServer: {
     mocks: {
       prefix: '/services/'
     }
   },
 
-  // plugins are not required for your application but the quickstart example uses them
+  // plugins are not required for your application but the this example uses them
   plugins: function(plugins) {
     return [
       // precompile all handlebars templates
