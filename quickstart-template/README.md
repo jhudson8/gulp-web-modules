@@ -27,7 +27,7 @@ var gulp = require('gulp')
 ```
 
 The handlebars plugin require the handlebars object to be passed in so we need to included it in the package.json
-```json
+```javascript
   "devDependencies": {
     "gulp": "~3.5",
     "gulp-web-modules": "~0.1",
@@ -40,9 +40,9 @@ The handlebars plugin require the handlebars object to be passed in so we need t
 
 After you install the modules you are ready to build and run the application.
 
-    npm install
+    > npm install
 
-    gulp watchrun
+    > gulp watchrun
 
 browse to [http://localhost:8080](http://localhost:8080)
 
