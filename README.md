@@ -17,4 +17,4 @@ See the [docs](./docs/index.md) to understand how to use these gulp tasks, build
 
 Quick Start
 ------------
-View the [quick start guide](./docs/quick-start.md)
+View the [quick start guide](https://github.com/jhudson8/gulp-web-modules/blob/master/quickstart-template/README.md)
