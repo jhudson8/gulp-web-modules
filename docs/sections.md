@@ -1,6 +1,6 @@
 What is a "Section"?
 ===================
-The application build process is divided up different sectional builds and a larger global build.  The javascript code within each section will be packaged up together and end up in the same file using [browserify](http://browserify.org/).  Each file should be treated like a node module.  In other words, whatever is in `module.exports` or just `exports` will be available to other modules within this section.
+The application build process is divided up different sectional builds and a larger global build.  The javascript code within each section will be packaged up together and end up in the same file using [browserify](http://browserify.org/).  Each javascript file within a section is called a [module](./modules.md).
 
 Section Structure
 ----------
@@ -43,28 +43,7 @@ requireSection('foo', function(sessionExports) {
   // sessionExports is the object that was populated from modules within the foo section
 });
 ```
-
-Example
-----------
-Using the directory structure described in the above example, modules could be accessed in this way
-
-sections > foo > index.js
-```javascript
-var myValue = require('./package1/widget').foo();
-
-// add this value to the exports to be available when another section requires this section
-session.exports.myValue = foo;
-```
-
-sections > foo > package1 > widget.js
-```javascript
-exports = {
-  foo: function() {
-    // return a global value that was set in another module using 'global'
-    return global.foo;
-  }
-}
-```
+See [module details](for more examples).
 
 Build / Plugins
 ----------
