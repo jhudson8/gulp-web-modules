@@ -20,47 +20,34 @@ for (var i in knownPlugins) {
 }
 
 function initServer(options) {
-  var devServerPlugins = [];
-  // proxy all dev server plugins
+
+
+  // these server plugins were registered with web-module plugins
+  var server = require('./lib/dev-server')(options.devServer);
+
+  // add dev server plugins regered from standard plugins
   for (var i in options.plugins) {
     var plugin = options.plugins[i];
     if (plugin.devServer) {
-      devServerPlugins.push(plugin.devServer);
+      server.addPlugin(plugin.devServer);
     }
   }
 
-  // add the root devserver plugin
-  devServerPlugins.push({
-    onRequest: function (requestOptions, pluginOptions, callback) {
-      var uri = requestOptions.uri;
-      if (uri === '/') {
-        uri = options.defaultServResource;
-      }
-      callback({
-        fileName: path.join(requestOptions.base, uri)
-      })
-    }
-  });
-  devServerPlugins.push(require('./lib/dev-server/admin-config'));
-
-  // these server plugins were registered with web-module plugins
-  var server = require('./lib/dev-server')(merge(options, {
-    plugins: devServerPlugins
-  }));
-
+  // now add the plugins registered with basic web-module config
   var serverOptions = options.devServer;
-  if (serverOptions) {
-    // now add the plugins registered with basic web-module config
-    var knownServerPlugins = {
-      mocks: './lib/dev-server/mock-server'
-    }
-    for (var key in knownServerPlugins) {
-      if (serverOptions[key]) {
-        var plugin = require(knownServerPlugins[key])(serverOptions[key]);
-        server.addPlugin(plugin);
-      }
+  var knownServerPlugins = {
+    mocks: './lib/dev-server/mock-server'
+  }
+  for (var key in knownServerPlugins) {
+    if (serverOptions[key]) {
+      var plugin = require(knownServerPlugins[key])(serverOptions[key]);
+      server.addPlugin(plugin);
     }
   }
+
+  // add the root devserver plugins
+  server.addPlugin(require('./lib/dev-server/public-resources'));
+  server.addPlugin(require('./lib/dev-server/admin-config'));
 
   return server;
 }
@@ -85,24 +72,30 @@ function initOptions(options) {
   if (typeof options.plugins === 'function') {
     options.plugins = options.plugins(pluginFactory);
   }
-  options.buildType = gulp.env.type || 'dev';
-  
-  var _defaults = {
+
+  var defaults = function(base, ext) {
+    for (var name in ext) {
+      if (!base[name]) {
+        base[name] = ext[name];
+      }
+    }
+  }
+
+  defaults(options, {
+    buildType: gulp.env.type || 'dev',
     plugins: [],
     entry: 'index.js',
     primarySection: 'base',
-    buildPath: 'build',
+    buildPath: 'build/',
+    devServer: {}
+  });
+
+  defaults(options.devServer, {
     defaultServResource: 'index.html',
-    port: 8080,
-    proxy: function (gulpOptions, requestOptions, callback) {
-      callback();
-    }
-  }
-  for (var i in _defaults) {
-    if (options[i] === undefined) {
-      options[i] = _defaults[i];
-    }
-  }
+    port: '8080'
+  });
+  options.devServer.base = options.buildPath;
+
   return options;
 }
 
