@@ -32,11 +32,11 @@ The handlebars plugin require the handlebars object to be passed in so we need t
     "gulp": "~3.5",
     "gulp-web-modules": "~0.1",
 
-    // the following are only required for optional plugins (but used for this example)
     "handlebars": "~1.3",
     "gulp-react": "~0.1"
   }
 ```
+*note*: `handlebars` and `gulp-react` are optional dependencies but required for this example.
 
 After you install the modules you are ready to build and run the application.
 
