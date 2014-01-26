@@ -47,14 +47,17 @@ requireSection('foo', function(sessionExports) {
 Example
 ----------
 Using the directory structure described in the above example, modules could be accessed in this way
+
+sections > foo > index.js
 ```javascript
-// sections > foo > index.js
 var myValue = require('./package1/widget').foo();
 
 // add this value to the exports to be available when another section requires this section
 session.exports.myValue = foo;
+```
 
-// sections > foo > package1 > widget.js
+sections > foo > package1 > widget.js
+```javascript
 exports = {
   foo: function() {
     // return a global value that was set in another module using 'global'
