@@ -5,11 +5,12 @@ Quick Install
 package.json
 ------------
 Add the `gulp-web-modules` dependency and additional `handlebars` and `gulp-react` that will be used for this example.
-```json
+```javascript
   "devDependencies": {
     "gulp": "~3.5",
     "gulp-web-modules": "~0.1",
-    // the following are only required for optional plugins
+
+    // the following are only required for optional plugins (but used for this example)
     "handlebars": "~1.3",
     "gulp-react": "~0.1"
   }
