@@ -9,10 +9,18 @@ Each section has all associated resources in a directory matching the section na
     sections
       > foo
         > index.js
+        > someting-else.js
+        > package1
+          > widget.js
+        > style.css (or)
+        > styles
+          > style1.css
+          > style2.css
+
 ```
 The entry point into a section (the code that is run when a section is evaluated) is `index.js`.  This file is the only file within your section that should not contribute to `module.exports`.
 
-Once sections are build, you will actuall end up with a file within the sections directory as {section name}.js.  In other words
+Once sections are built, you will end up with a file within the sections directory as {section name}.js.  In other words
 ```
     build
       > sections
