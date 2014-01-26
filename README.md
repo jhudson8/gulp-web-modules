@@ -11,64 +11,10 @@ While these tasks do add a small amount of code to your application, it is only 
 * [browserify](http://browserify.org/) to modularize javascript files but allow them to be compiled to a single javascript file to reduce download overhead and provide synchronous code access
 * [requirejs](http://requirejs.org/) to keep you from having to create a single artifact that will serve the whole single page application
 
+Get More Information
+------------
+See the [docs](./docs/index.md) to understand how to use these gulp tasks, build your modular application and use the development server.
 
 Quick Install
---------------
-
-Add this to package.json
-```json
-  "devDependencies": {
-    "gulp": "~3.5",
-    "gulp-web-modules": "~0.1",
-    // the following are only required for optional plugins
-    "handlebars": "~1.3",
-    "gulp-react": "~0.1"
-  }
-```
-
-Add the builder tasks to your gulpfile.  This is a sample gulpfile configured to serve out mocks as well
-```javascript
-var gulp = require('gulp')
-    modules = require('gulp-web-modules');
-
-var modules = require('gulp-web-modules')({
-
-  // not required if you do not with to serve out mock files
-  devServer: {
-    mocks: {
-      prefix: '/services/'
-    }
-  },
-
-  // plugins are not required for your application but the quickstart example uses them
-  plugins: function(plugins) {
-    return [
-      plugins.handlebars(require('handlebars')),
-      plugins.react(require('gulp-react')),
-      plugins.lib()
-    ]
-  }
-}).injectTasks(gulp);
-```
-
-Install the new dependency
-```
-npm install
-```
-
-Execute the `jumpstart` task to build a boilerplate application
-```
-gulp jumpstart
-```
-
-Start the dev server and watch for file changes
-```
-gulp watchrun
-```
-
-Look at your app on localhost:8080;  You can turn on the mock integration by browsing to localhost:8080/$admin
-
-
-Tell me more
 ------------
-See the [docs](./docs) to understand how to use these gulp tasks, build your modular application and use the development server.
+View the [quick install guide](./docs/quick-install.md)
