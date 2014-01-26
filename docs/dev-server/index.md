@@ -34,6 +34,7 @@ Plugins
 The dev server can be modified with plugins.  The functionality of the dev server is actually all plugin-based.  This can be useful to serve mock files with custom logic or to proxy API requests to another service provider.  See the [existing plugins](https://github.com/jhudson8/gulp-web-modules/tree/master/lib/dev-server) for examples.
 
 A plugin is simply a hash which has a defined function as the `onRequest` attribute (and optionally a `userConfig` attribute).  This is an async function with parameters:
+
 1. requestOptions: hash containing attributes specific to the current request
   * uri: url.parse(req.url).pathname
   * req: [the request object](http://nodejs.org/api/http.html#http_http_incomingmessage)
