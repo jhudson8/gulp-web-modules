@@ -44,6 +44,7 @@ A plugin is simply a hash which has a defined function as the `onRequest` attrib
   * `true`: if the plugin handled the requested resource and no further plugins should be notified of the resource
   * data hash containing the following optional values
     * fileName: (string or Array) single/array of filenames to be served out in order of importance (absolute or relative to the project root)
+    * text: text to output as the response
     * stream: a stream to be piped to the response
     * mimeType: mime type to be applied if a stream is used
 
@@ -80,3 +81,38 @@ An example from the mock server is:
     }
 ```
 
+Example Plugin
+--------------
+The following simple example will listen for a uri which can be configured on the admin page.  It will respond with simple text which can be configured on the admin page.
+
+```javascript
+module.exports = function(options) {
+  // set the default configuration
+  options = options || {};
+  var store = {
+    text: options.text || 'World',
+    uri: options.uri || '/hello'
+  };
+
+  return {
+    userConfig: {
+      key: 'example',
+      section: 'Example',
+      inputs: [
+        {key: 'text', label: 'Response Text'},
+        {key: 'uri', label: 'URI'}
+      ],
+      store: store
+    },
+    onRequest: function(requestOptions, pluginOptions, callback) {
+      if (requestOptions.uri === store.uri) {
+        callback({
+          text: store.text
+        });
+      } else {
+        callback();
+      }
+    }
+  }
+}
+```
