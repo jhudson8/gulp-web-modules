@@ -45,7 +45,7 @@ If the mock server is enabled, it will serve out mock files from `dev > mocks`. 
 
 lib
 -----
-If the [lib plugin](./plugins/lib.md) is enabled, all resources within this directory will be prepended to the base generated [section](./sections) javascript code file.
+If the [lib plugin](./plugins/lib.md) is enabled, all resources within this directory will be prepended to the base generated [section](./sections.md) javascript code file.
 
 public
 ------
