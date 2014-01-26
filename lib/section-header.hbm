@@ -6,4 +6,3 @@ self.config={lastName:"Doe"};
 {{else}}
 define(function(){var section={exports:{}};
 {{/if}}
-
