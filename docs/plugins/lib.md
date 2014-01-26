@@ -13,7 +13,7 @@ Gulpfile
     var gulp = require('gulp')
         modules = require('gulp-web-modules');
 
-    var modules = require('gulp-web-modules')({
+    modules({
       plugins: function(plugins) {
         return [
           plugins.lib({
