@@ -3,24 +3,12 @@ var builder = require('./lib/builder'),
   clean = require('gulp-clean'),
   through = require("through2"),
   path = require('path'),
-  join = require('./lib/async-join'),
+  asyncJoin = require('gwm-util').asyncJoin,
   fs = require('fs')
   plugins = [],
   devServerPlugins = [];
 
-var pluginFactory = {},
-    knownPlugins = ['handlebars', 'lib', 'react'];
-for (var i in knownPlugins) {
-  var key = knownPlugins[i];
-  (function(key) {
-    pluginFactory[key] = function(options) {
-      return require('./plugins/' + key)(options);
-    }
-  })(key);
-}
-
 function initServer(options) {
-
 
   // these server plugins were registered with web-module plugins
   var server = require('./lib/dev-server')(options.devServer);
@@ -70,7 +58,7 @@ function merge(options, mergeOptions) {
 function initOptions(options) {
   options = options || {};
   if (typeof options.plugins === 'function') {
-    options.plugins = options.plugins(pluginFactory);
+    options.plugins = options.plugins();
   }
 
   var defaults = function(base, ext) {
@@ -121,7 +109,7 @@ module.exports = function (options) {
     var sectionDirs = fs.readdirSync('./sections'),
         filePrefix = './sections',
         sectionBuilder = require('./lib/section-builder'),
-        blocker = join(_callback);
+        blocker = asyncJoin(_callback);
 
     for (var i in sectionDirs) {
       var name = sectionDirs[i];
@@ -133,7 +121,8 @@ module.exports = function (options) {
         section: name
       });
 
-      sectionBuilder(options, blocker.newCallback())();
+      var callback = blocker.newCallback();
+      sectionBuilder(options, callback)();
     }
     blocker.complete();
   }
