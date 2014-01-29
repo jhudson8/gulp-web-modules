@@ -1,8 +1,12 @@
 {{#if isBase}}
-function requireSection(e,t){var n=Array.isArray(e)?e:[e];n=n.map(function(e){return"sections/"+e});require(n,t)}if(typeof self==="undefined"){var self=typeof window!=="undefined"?window:{}}
-{{#if config}}
-self.config={lastName:"Doe"};
-{{/if}}
+function requireSection(e,t){
+  var n=Array.isArray(e)?e:[e];
+      n=n.map(function(e){
+          return"sections/"+e
+        });
+  require(n,t);
+}
+if(typeof self==="undefined"){var self=typeof window!=="undefined"?window:{}}
 {{else}}
 define(function(){var section={exports:{}};
 {{/if}}
