@@ -2,7 +2,7 @@
   "name": "gulp-web-modules",
   "version": "0.1.5",
   "author": "Joe Hudson <joehud@gmail.com>",
-  "description": "Easily wire up your javascript files using browserify and requirejs with this gulp plugin",
+  "description": "Module oriented build system for single page applications",
   "repository": {
     "type": "git",
     "url": "https://github.com/jhudson8/gulp-web-modules.git"
@@ -11,28 +11,27 @@
     "gulpplugin",
     "gulp",
     "web",
-    "requirejs",
+    "commonjs",
+    "amd",
     "browserify"
   ],
+  "licenses": {
+    "type": "MIT",
+    "url": "https://github.com/stevelacy/gulp-stylus/raw/master/LICENSE"
+  },
   "dependencies": {
-    "gulp": "*",
     "gulp-rename": "~0.2",
-    "gulp-uglify": "~0.1",
     "gulp-browserify": "~0.2",
     "gulp-clean": "~0.2",
     "gulp-watch": "~0.4",
     "gulp-plumber": "0.5",
     "event-stream": "~3.1",
     "through2": "~0.4",
-    "through": "*",
     "gulp-filter": "~0.2",
-    "map-stream": "~0.0.4",
     "gulp-if": "~0.0.3",
-    "gulp-header": "~1.0",
-    "gulp-footer": "~1.0",
-    "gulp-util": "~2.2.5",
-    "multimatch": "~0.1.0",
-    "gulp-debug": "~0.1.0"
-  },
-  "license": "MIT"
+    "gulp-util": "~2.2",
+    "map-stream": "~0.0",
+    "multimatch": "~0.1",
+    "handlebars": "~1.3"
+  }
 }
