@@ -1,17 +1,23 @@
-var builder = require('./lib/builder'),
-  gulp = require('gulp'),
-  clean = require('gulp-clean'),
-  through = require("through2"),
-  path = require('path'),
-  asyncJoin = require('gwm-util').asyncJoin,
-  fs = require('fs')
-  plugins = [],
-  devServerPlugins = [];
+var sectionBuilder = require('./lib/section-builder'),
+    clean = require('gulp-clean'),
+    through = require("through2"),
+    path = require('path'),
+    asyncJoin = require('gwm-util').asyncJoin,
+    devServer = require('gwm-dev-server'),
+    fs = require('fs')
+    plugins = [],
+    devServerPlugins = [],
+    gulp = undefined;
 
 function initServer(options) {
+  // merge primary options into dev server options for plugin access
+  var merged = merge(options.devServer, options);
+  if (options.devServer) {
+    delete options.devServer;
+  }
 
   // these server plugins were registered with web-module plugins
-  var server = require('./lib/dev-server')(options.devServer);
+  var server = devServer(merged);
 
   // add dev server plugins regered from standard plugins
   for (var i in options.plugins) {
@@ -20,22 +26,6 @@ function initServer(options) {
       server.addPlugin(plugin.devServer);
     }
   }
-
-  // now add the plugins registered with basic web-module config
-  var serverOptions = options.devServer;
-  var knownServerPlugins = {
-    mocks: './lib/dev-server/mock-server'
-  }
-  for (var key in knownServerPlugins) {
-    if (serverOptions[key]) {
-      var plugin = require(knownServerPlugins[key])(serverOptions[key]);
-      server.addPlugin(plugin);
-    }
-  }
-
-  // add the root devserver plugins
-  server.addPlugin(require('./lib/dev-server/public-resources'));
-  server.addPlugin(require('./lib/dev-server/admin-config'));
 
   return server;
 }
@@ -57,6 +47,7 @@ function merge(options, mergeOptions) {
 
 function initOptions(options) {
   options = options || {};
+  options.gulp = gulp;
   if (typeof options.plugins === 'function') {
     options.plugins = options.plugins();
   }
@@ -94,7 +85,6 @@ function _clean(src) {
 }
 
 module.exports = function (options) {
-  options = initOptions(options);
 
   function build(options) {
       buildSections(options);
@@ -108,7 +98,6 @@ module.exports = function (options) {
   function buildSections(options, _callback) {
     var sectionDirs = fs.readdirSync('./sections'),
         filePrefix = './sections',
-        sectionBuilder = require('./lib/section-builder'),
         blocker = asyncJoin(_callback);
 
     for (var i in sectionDirs) {
@@ -128,7 +117,10 @@ module.exports = function (options) {
   }
 
   return {
-    injectTasks: function (gulp, tasks) {
+    injectTasks: function (_gulp, tasks) {
+      gulp = _gulp;
+      options = initOptions(options);
+
       if (!tasks) {
         tasks = [];
         for (var i in this) {
@@ -172,11 +164,7 @@ module.exports = function (options) {
     },
 
     jumpstart: function() {
-      gulp.src(__dirname + '/quickstart-template/*/**').pipe(gulp.dest('./'));
-    },
-
-    plugins: {
-      handlebars: require('./plugins/handlebars')
+      gulp.src(__dirname + '/jumpstart-template/*/**').pipe(gulp.dest('./'));
     }
   }
 }

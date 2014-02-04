@@ -1,8 +1,11 @@
 gulp-web-modules
 ================
 
-A set of gulp tasks that that make modular development of javascript web applications easy.  It provides:
-* build process which compiles using [browserify](http://browserify.org/) for javascript files within defined "sections" for synchronous access and each "section" generated javascript code wrapped in [requirejs](http://requirejs.org/) define functions for asynchronous "section" access.
+A set of gulp tasks that that make modular development of single page  web applications easy.
+
+Your a
+  It provides:
+* build process which compiles using [browserify](http://browserify.org/) for javascript files within defined "sections" for synchronous access with each "section" generated javascript code wrapped in [requirejs](http://requirejs.org/) define functions for asynchronous "section" access.
 * a development server which serves your application and mock files but can also be plugged in for enhanced functionality
 * predefined gulp tasks to allow you to be developing your application with no setup time
 * deployment type specific configuration injection from a separate json configuation file

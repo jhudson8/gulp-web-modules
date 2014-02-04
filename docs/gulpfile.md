@@ -15,7 +15,7 @@ You can pass in additional options to customize how your dev server runs or how 
 * entry: (default "index.js") define the [section](./sections.md) entry javascript file
 * primarySection: (default "base") define the primary [section](./sections.md) name which functions as the application entry point
 * buildPath (default "build/") define the path to copy build resources to
-* devServer: provide additional [dev server options](./dev-server/index.md)
+* devServer: provide additional [dev server options](FIXME)
 
 Example
 ------------
@@ -36,22 +36,9 @@ A more customized gulpfile can be seen below
       },
 
       // customize the behavior with plugins
-      plugins: function(plugins) {
-        return [
-
-          // precompile all handlebars (.hbs) templates
-          plugins.handlebars(require('handlebars')),
-
-          // precompile all reactjs (.jsx) templates
-          plugins.react(require('gulp-react')),
-
-          // copy contents of all files in the lib directory to the base generated javascript file
-          plugins.lib({
-
-            // ensure that the following files are rendered first
-            priority: ['require-*']
-         })
-        ]
-      }
+      plugins: function(plugins) [
+        ..
+      ]
     }).injectTasks(gulp);
 ```
+See (plugins)[./plugin-api] for plugin details and available plugins

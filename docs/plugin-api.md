@@ -1,8 +1,12 @@
 Lifecycle Plugins
 ===============
-There are many different events used to hook into the gulp pipeline with your own build requirements.  A plugin is used to access these events.  Example plugins can be seen [here](https://github.com/jhudson8/gulp-web-modules/tree/master/plugins).
+There are many different events used to hook into the gulp pipeline with your own build requirements.  A plugin is used to access these events and perform build actions.
 
 A plugin is simply a hash that contains any of the attributes described below.  Usually the module exports a function whih can accept plugin options and returns the plugin hash values.
+
+Available Known Plugins
+--------------
+FIXME
 
 
 Example plugin method
@@ -31,6 +35,13 @@ Options
 Plugin Attributes
 =================
 The following are all of the attributes that are applicable for a section.  When appropriate, each attribute has an additional "Base" attribute which will only be applifed if the current section being processed is the base section.  Otherwise (for section specific attributes) they will be applied to any sections.
+
+Each section has a unique javascript build and css build.  For each of these, available plugin attributes are:
+* glob: this is not an event but an attribute that is used to identify specific file types that need to be included.  If this is present, all file types that you need should be included because all other files will be filtered out (meaning, if you still want .js files you should include that as well).  This value should be a string value or array of strings that represent a gulp [multimatch](FIXME)
+* beforeMerge: execute before section files are joined into a single file (before browserify for the javascript build)
+* afterMerge: execute after section files are joined into a single file (after browserify for the javascript build)
+* complete: a little bit of required code is added after the files are merged (for javascript), this is executed after that javascript code is added (for css build this is the same as afterMerge)
+
 
 javascriptGlob
 --------------

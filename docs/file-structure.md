@@ -3,23 +3,19 @@ File Structure
 
 Using example file structure below:
 ```
-  config
-    > dev.json
-    > production.json
   build
-    > ...
+  |-- ...
   dev
-    > mocks
-      foo.json
-  lib
-    > require.js
+  |-- mocks
+      |-- foo.json
   public
-    > index.html
+  |-- index.html
   sections
-    > base
-      index.js
-    > foo
-      index.js
+  |-- base
+  |   |-- index.js
+  |-- foo
+      |-- index.js
+      |-- another-module.js
 ```
 
 config
@@ -42,10 +38,6 @@ When the application is compled from the source artifacts to the browserified po
 dev
 -----
 If the mock server is enabled, it will serve out mock files from `dev > mocks`.  See the [mock server docs](./dev-server/mocks.md) for more details.
-
-lib
------
-If the [lib plugin](./plugins/lib.md) is enabled, all resources within this directory will be prepended to the base generated [section](./sections.md) javascript code file.
 
 public
 ------
