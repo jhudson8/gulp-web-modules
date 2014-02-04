@@ -1,5 +1,5 @@
 
 requireSection('hello', function(data) {
-  alert('hello ' + data.name);
+  document.getElementById('message').innerText = 'hello ' + data.name;
 });
 

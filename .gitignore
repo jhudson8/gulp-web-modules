@@ -6,3 +6,7 @@ build
 /lib/template/package.json
 
 /lib/template/gulpfile.js
+
+/jumpstart-template/package.json
+
+/jumpstart-template/gulpfile.js
