@@ -20,4 +20,33 @@ See the [docs](./docs/index.md) to understand how to use these gulp tasks, build
 
 Quick Start
 ------------
-View the [quick start guide](https://github.com/jhudson8/gulp-web-modules/blob/master/quickstart-template/README.md)
+Add gulp-web-modules to package.json
+```json
+    "dependencies": {
+      "gulp-web-modules": "*"
+    }
+```
+
+Inject the gulp-web-module tasks with gulpfile.js
+```javascript
+    var gulp = require('gulp'),
+        gwm = require('gulp-web-modules');
+
+    gwm({}).injectTasks(gulp);
+```
+
+Install the modules and run the jumpstart task
+```
+    npm install
+    gulp jumpstart
+    gulp watchrun
+```
+Now browse to [localhost:8080](http://localhost:8080)
+
+Plugins
+-----------
+There are many plugins can be used to enhance the build functionality.  These can be seen [here](https://npmjs.org/search?q=gulpWebModules).
+
+Example Application
+-----------
+This [example application](https://github.com/jhudson8/gwm-example) uses many of the plugins described above.
