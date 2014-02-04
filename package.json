@@ -31,7 +31,7 @@
     "map-stream": "~0.0",
     "multimatch": "~0.1",
     "handlebars": "~1.3",
-    "gwm-dev-server": "~0.1",
-    "gwm-util": "~0.1"
+    "gwm-dev-server": "~0.0",
+    "gwm-util": "~0.0"
   }
 }

@@ -10,3 +10,5 @@ build
 /jumpstart-template/package.json
 
 /jumpstart-template/gulpfile.js
+
+/npm-debug.log
