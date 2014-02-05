@@ -50,3 +50,8 @@ There are many plugins can be used to enhance the build functionality.  These ca
 Example Application
 -----------
 This [example application](https://github.com/jhudson8/gwm-example) uses many of the plugins described above.
+
+Project File Structure
+-----------
+![Project file structure](https://raw2.github.com/jhudson8/gulp-web-modules/master/docs/fs_visual.png)
+
