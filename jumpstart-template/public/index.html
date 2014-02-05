@@ -10,7 +10,34 @@
     <em id="message"></em>
     <br>
     <br>
-    More details and plugins can be seen in the <a href="https://github.com/jhudson8/gwm-example">simple example app</a>.
+    The following direcories were created
+    <ul>
+      <li><em>public</em>: any files put here will be copied to the root of the deployable contents</li>
+      <li><em>sections/base</em>: The required "section" for any application.  All javascript files within will be <a href="http://browserify.org/">"browserified"</a> and merged into a single deployable javascript file
+        <ul>
+          <li><em>index.js</em>: any exports from this module will be available when the "base" section (this section) is required</li>
+          <li><em>normalize.css</em>: A normalize css file mostly used to demonstrate css file concatination</li>
+          <li><em>style.css</em>: The other stylesheet which gets merged to {root}/sections/base.css</li>
+        </ul>
+      </li>
+      <li><em>sections/hello</em>: A separate "section" used as an example
+        <ul>
+          <li><em>index.js</em>: any exports from this module will be available when the "hello" section is required</li>
+        </ul>
+      </li>
+    </ul>
+    <p>
+      More details and plugins can be seen in the <a href="https://github.com/jhudson8/gwm-example">simple example app</a>.
+    </p>
+    Some available plugins are:
+    <ul>
+      <li><em><a href="https://github.com/jhudson8/gwm-config">gwm-config</a></em>: copy build type specific config JSON to the base javascript file</li>
+      <li><em><a href="https://github.com/jhudson8/gwm-lib">gwm-lib</a></em>: copy all file content in a specific directory to gulp-web-modules base javascript file</li>
+      <li><em><a href="https://github.com/jhudson8/gwm-react">gwm-react</a></em>: compile all jsx into javascript</li>
+      <li><em><a href="https://github.com/jhudson8/gwm-handlebars">gwm-handlebars</a></em>: precompile all handlebars templates</li>
+      <li><em><a href="https://github.com/jhudson8/gwm-stylus">gwm-stylus</a></em>: compile all stylus files into css</li>
+      <li><em><a href="https://github.com/jhudson8/gwm-sass">gwm-sass</a></em>: compile all sass/scss files into css</li>
+    </ul>
   </body>
   <script type="text/javascript" src="sections/base.js"></script>
 </html>
