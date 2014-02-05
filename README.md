@@ -45,7 +45,7 @@ Now browse to [localhost:8080](http://localhost:8080)
 
 Plugins
 -----------
-There are many plugins can be used to enhance the build functionality.  These can be seen [here](https://npmjs.org/search?q=gulpWebModules).
+There are many plugins can be used to enhance the build functionality.  These can be seen [here](https://npmjs.org/search?q=gulpWebModulePlugin).
 
 Example Application
 -----------
