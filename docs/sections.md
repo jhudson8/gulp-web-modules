@@ -43,7 +43,7 @@ requireSection('foo', function(sessionExports) {
   // sessionExports is the object that was populated from modules within the foo section
 });
 ```
-See [module details](for more examples).
+See [module details](./modules.md) for more examples.
 
 Build / Plugins
 ----------
