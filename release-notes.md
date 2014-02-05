@@ -2,7 +2,19 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.0...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.1...master)
+
+## v0.2.1 - February 4th, 2014
+
+- [#2](https://github.com/jhudson8/gulp-web-modules/issues/2) - Remove gulp as a depencency
+
+- add quick start docs - 5b7a31b
+- update references - e832bf4
+- update documentation - 0c8188b
+- update plugin search key - 37fdcb1
+- update the jumpstart template - dc0dd13
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.0...v0.2.1)
 
 ## v0.2.0 - February 3rd, 2014
 
