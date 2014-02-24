@@ -9,9 +9,10 @@ Access to other modules
 Assuming the following directory structure exists:
 ```
   sections
-    > base
-      > index.js
-      > module1.js
+    |-- base
+        |-- js
+            |-- index.js
+            |-- module1.js
 ```
 I can access `module1` exports from `index.js`
 

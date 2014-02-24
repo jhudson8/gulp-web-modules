@@ -16,11 +16,11 @@ exports.foo = 'bar';
 
 The exports index.js module for each section will be provided as the callback parameter when another section is loaded asynchronously.
 For example, in section *foo*
-    // sections/foo/index.html
+    // sections/foo/js/index.js
     module.exports.abc = 'def';
 
 And if I were to require *foo* from another section, I would have access to the *abc* attribute
-    // sections/bar/index.js
+    // sections/bar/js/index.js
     require('bar', function(barExports) {
       alert('abc is ' + barExports.abc);
     });

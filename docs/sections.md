@@ -7,15 +7,16 @@ Section Structure
 Each section has all associated resources in a directory matching the section name within a `sections` directory.  If I had a section called `foo`, my file structure would resemble
 ```
     sections
-      > foo
-        > index.js
-        > someting-else.js
-        > package1
-          > widget.js
-        > style.css (or)
-        > styles
-          > style1.css
-          > style2.css
+      |-- foo
+          |-- js
+              |-- index.js
+              |-- someting-else.js
+              |-- package1
+                  |-- widget.js
+          |-- style.css (or)
+          |-- styles
+              |-- style1.css
+              |-- style2.css
 
 ```
 The entry point into a section (the code that is run when a section is evaluated) is `index.js`.  This file is the only file within your section that should not contribute to `module.exports`.
@@ -23,9 +24,10 @@ The entry point into a section (the code that is run when a section is evaluated
 Once sections are built, you will end up with a file within the sections directory as {section name}.js.  In other words
 ```
     build
-      > sections
-        > foo.js
-        > foo.css
+      |-- sections
+          |-- js
+              |-- foo.js
+          |-- foo.css
 ```
 
 Base Section (application entry point)

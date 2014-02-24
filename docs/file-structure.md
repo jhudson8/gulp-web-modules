@@ -12,10 +12,12 @@ Using example file structure below:
   |-- index.html
   sections
   |-- base
-  |   |-- index.js
+      |-- js
+          |-- index.js
   |-- foo
-      |-- index.js
-      |-- another-module.js
+      |-- js
+          |-- index.js
+          |-- another-module.js
 ```
 
 config
