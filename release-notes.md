@@ -2,7 +2,25 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.1...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.2...master)
+
+## v0.2.2 - February 25th, 2014
+
+- remove duplicate pipes (because of watch) - 6a40cdf
+- remove section exports from base section - a4f8dd5
+- allow for negative globs - a0e4a5a
+- allow browserify options in gulp web module options - b99eee9
+- remove console log in css-concat - 30ed74d
+- remove temporary file usage with section-builder - a80f45b
+- add 'js' prefix to all javascript code - 94f7940
+- add browserifyTransform javascript plugin attribute - 2e00354
+- allow globs to be functions - 9d1992d
+- update image - 8f5d1ef
+- update fs image - 3a795fd
+- add file structure image ref - 69fc1a9
+- add file structure visual - 44f2e66
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.1...v0.2.2)
 
 ## v0.2.1 - February 4th, 2014
 
