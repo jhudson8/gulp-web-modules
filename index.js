@@ -102,16 +102,18 @@ module.exports = function (options) {
 
     for (var i in sectionDirs) {
       var name = sectionDirs[i];
-      options = merge(options, {
-        srcPath: filePrefix + '/' + name + '/',
-        tmpPath: 'build/_tmp/sections/' + name + '/',
-        buildPath: './build/sections/',
-        isBase: (name === 'base'),
-        section: name
-      });
+      if (name.indexOf('.') !== 0) {
+        options = merge(options, {
+          srcPath: filePrefix + '/' + name + '/',
+          tmpPath: 'build/_tmp/sections/' + name + '/',
+          buildPath: './build/sections/',
+          isBase: (name === 'base'),
+          section: name
+        });
 
-      var callback = blocker.newCallback();
-      sectionBuilder(options, callback)();
+        var callback = blocker.newCallback();
+        sectionBuilder(options, callback)();
+      }
     }
     blocker.complete();
   }
