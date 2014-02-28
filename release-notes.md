@@ -2,7 +2,15 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.2...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.3...master)
+
+## v0.2.3 - February 27th, 2014
+
+- add plumber to keep watching after build error - c76744e
+- add watch to css build - 5ab2975
+- change "glob" to "watch" in the plugin API - b4c490e
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.2...v0.2.3)
 
 ## v0.2.2 - February 25th, 2014
 
