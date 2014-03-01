@@ -2,7 +2,15 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.3...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.4...master)
+
+## v0.2.4 - March 1st, 2014
+
+- add shortcut task "wr" to "watchrun" - cd5e863
+- change jumpstart - d4f4550
+- change jumpstart - 90e1586
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.3...v0.2.4)
 
 ## v0.2.3 - February 27th, 2014
 
