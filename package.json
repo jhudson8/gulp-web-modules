@@ -1,6 +1,6 @@
 {
   "name": "gulp-web-modules",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "author": "Joe Hudson <joehud@gmail.com>",
   "description": "Module oriented build system for single page applications",
   "repository": {
