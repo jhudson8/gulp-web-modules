@@ -140,6 +140,7 @@ module.exports = function (options) {
           throw "invalid gulp-web-module task '" + task + "'";
         }
       }
+      gulp.task('wr', this.watchrun);
 
       return this;
     },
