@@ -7,17 +7,20 @@
     "type": "git",
     "url": "https://github.com/jhudson8/gulp-web-modules.git"
   },
+  "homepage": "https://github.com/jhudson8/gulp-web-modules/",
+  "bugs": "https://github.com/jhudson8/gulp-web-modules/issues/",
   "keywords": [
     "gulp",
+    "gulpfriendly",
     "web",
     "commonjs",
     "amd",
     "browserify"
   ],
-  "licenses": {
+  "licenses": [{
     "type": "MIT",
     "url": "https://github.com/jhudson8/gulp-web-modules/raw/master/LICENSE"
-  },
+  }],
   "dependencies": {
     "gulp-rename": "~0.2",
     "gulp-browserify": "~0.2",
