@@ -2,7 +2,16 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.4...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.5...master)
+
+## v0.2.5 - March 7th, 2014
+
+- [#6](https://github.com/jhudson8/gulp-web-modules/pull/6) - Adding `gulpplugin` keyword ([@pdehaan](https://api.github.com/users/pdehaan))
+- [#5](https://github.com/jhudson8/gulp-web-modules/issues/5) - Not a gulpplugin
+
+- add "beep" if the build fails - a1e3d0b
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.4...v0.2.5)
 
 ## v0.2.4 - March 1st, 2014
 
