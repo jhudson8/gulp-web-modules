@@ -2,7 +2,12 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.5...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.3.0...master)
+
+## v0.3.0 - June 7th, 2014
+- use ./js and ./styles for base module instead of ./sections/base/... - 29717e4
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.2.5...v0.3.0)
 
 ## v0.2.5 - March 7th, 2014
 
