@@ -4,7 +4,7 @@ var sectionBuilder = require('./lib/section-builder'),
     path = require('path'),
     asyncJoin = require('gwm-util').asyncJoin,
     devServer = require('gwm-dev-server'),
-    fs = require('fs')
+    fs = require('fs');
     plugins = [],
     devServerPlugins = [],
     gulp = undefined;
@@ -32,11 +32,11 @@ function initServer(options) {
 
 function merge(options, mergeOptions) {
   if (mergeOptions && options) {
-    var rtn = {};
-    for (var name in options) {
+    var rtn = {}, name;
+    for (name in options) {
       rtn[name] = options[name];
     }
-    for (var name in mergeOptions) {
+    for (name in mergeOptions) {
       rtn[name] = mergeOptions[name];
     }
     return rtn;
@@ -58,7 +58,7 @@ function initOptions(options) {
         base[name] = ext[name];
       }
     }
-  }
+  };
 
   defaults(options, {
     buildType: gulp.env.type || 'dev',
@@ -95,15 +95,28 @@ module.exports = function (options) {
     require('./lib/public-builder')(options).build();
   }
 
-  function buildSections(options, _callback) {
+  function buildSections(_options, _callback) {
     var sectionDirs = fs.readdirSync('./sections'),
         filePrefix = './sections',
-        blocker = asyncJoin(_callback);
+        blocker = asyncJoin(_callback),
+        callback, options;
 
+    // base section
+    options = merge(_options, {
+      srcPath: './',
+      tmpPath: 'build/_tmp/sections/base/',
+      buildPath: './build/sections/base',
+      section: 'base',
+      isBase: true
+    });
+    callback = blocker.newCallback();
+    sectionBuilder(options, callback)();
+
+    // additional sections
     for (var i in sectionDirs) {
       var name = sectionDirs[i];
       if (name.indexOf('.') !== 0) {
-        options = merge(options, {
+        options = merge(_options, {
           srcPath: filePrefix + '/' + name + '/',
           tmpPath: 'build/_tmp/sections/' + name + '/',
           buildPath: './build/sections/',
@@ -111,28 +124,30 @@ module.exports = function (options) {
           section: name
         });
 
-        var callback = blocker.newCallback();
+        callback = blocker.newCallback();
         sectionBuilder(options, callback)();
       }
     }
+
     blocker.complete();
   }
 
   return {
     injectTasks: function (_gulp, tasks) {
+      var i;
       gulp = _gulp;
       options = initOptions(options);
 
       if (!tasks) {
         tasks = [];
-        for (var i in this) {
+        for (i in this) {
           if (i !== 'injectTasks' && i !== 'plugins') {
             tasks.push(i);
           }
         }
       }
 
-      for (var i in tasks) {
+      for (i=0; i<tasks.length; i++) {
         var task = tasks[i];
         if (this[task]) {
           gulp.task(task, this[task]);
@@ -169,5 +184,5 @@ module.exports = function (options) {
     jumpstart: function() {
       gulp.src(__dirname + '/jumpstart-template/*/**').pipe(gulp.dest('./'));
     }
-  }
-}
+  };
+};
