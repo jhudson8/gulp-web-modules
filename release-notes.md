@@ -2,7 +2,15 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.3.0...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.4.0...master)
+
+## v0.4.0 - June 16th, 2014
+- update read me - 57170fa
+- allow plugins to optionally lazy load using a callback function - e55c14e
+- bug fix: don't fail if the "sections" directory doesn't exist - c197c59
+- use -t {build type} to specify build mode (ex: dev or prod) - b1e0ef0
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.3.0...v0.4.0)
 
 ## v0.3.0 - June 7th, 2014
 - use ./js and ./styles for base module instead of ./sections/base/... - 29717e4
