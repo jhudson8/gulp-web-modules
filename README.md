@@ -64,6 +64,8 @@ Project File Structure
    |- css files (others can be used with additional plugins)
 ```
 
+For [bower](http://bower.io/) support, refer to the [gwm-lib](https://github.com/jhudson8/gwm-lib) plugin.
+
 Dev Server
 ------------
 When using ```gulp watch```, ```gulp watchrun``` or ```gulp wr``` (shorthand for ```gulp watchrun```), the [gwm-dev-server](https://github.com/jhudson8/gwm-dev-server) server is executed.  This can be configured using the options as shown on that page.  An example is below:
