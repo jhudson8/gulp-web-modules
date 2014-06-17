@@ -4,7 +4,8 @@ var sectionBuilder = require('./lib/section-builder'),
     path = require('path'),
     asyncJoin = require('gwm-util').asyncJoin,
     devServer = require('gwm-dev-server'),
-    fs = require('fs');
+    fs = require('fs'),
+    argv = require('yargs').argv,
     plugins = [],
     devServerPlugins = [],
     gulp = undefined;
@@ -60,8 +61,11 @@ function initOptions(options) {
     }
   };
 
+  if (!options.buildType) {
+    options.buildType = argv.t || 'dev';
+  }
+
   defaults(options, {
-    buildType: gulp.env.type || 'dev',
     plugins: [],
     entry: 'index.js',
     primarySection: 'base',
