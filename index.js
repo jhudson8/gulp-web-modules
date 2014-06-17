@@ -116,20 +116,28 @@ module.exports = function (options) {
     callback = blocker.newCallback();
     sectionBuilder(options, callback)();
 
-    // additional sections
-    for (var i in sectionDirs) {
-      var name = sectionDirs[i];
-      if (name.indexOf('.') !== 0) {
-        options = merge(_options, {
-          srcPath: filePrefix + '/' + name + '/',
-          tmpPath: 'build/_tmp/sections/' + name + '/',
-          buildPath: './build/sections/',
-          isBase: (name === 'base'),
-          section: name
-        });
+    var sectionDirs;
+    try {
+      sectionDirs = fs.readdirSync('./sections');
+    } catch (e) {}
+    if (sectionDirs) {
+      var filePrefix = './sections';
 
-        callback = blocker.newCallback();
-        sectionBuilder(options, callback)();
+      // additional sections
+      for (var i in sectionDirs) {
+        var name = sectionDirs[i];
+        if (name.indexOf('.') !== 0) {
+          options = merge(_options, {
+            srcPath: filePrefix + '/' + name + '/',
+            tmpPath: 'build/_tmp/sections/' + name + '/',
+            buildPath: './build/sections/',
+            isBase: (name === 'base'),
+            section: name
+          });
+
+          callback = blocker.newCallback();
+          sectionBuilder(options, callback)();
+        }
       }
     }
 
