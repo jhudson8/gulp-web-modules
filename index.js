@@ -8,7 +8,7 @@ var sectionBuilder = require('./lib/section-builder'),
     argv = require('yargs').argv,
     plugins = [],
     devServerPlugins = [],
-    gulp = undefined;
+    gulp;
 
 function initServer(options) {
   // merge primary options into dev server options for plugin access
@@ -49,9 +49,6 @@ function merge(options, mergeOptions) {
 function initOptions(options) {
   options = options || {};
   options.gulp = gulp;
-  if (typeof options.plugins === 'function') {
-    options.plugins = options.plugins();
-  }
 
   var defaults = function(base, ext) {
     for (var name in ext) {
@@ -66,11 +63,21 @@ function initOptions(options) {
   }
 
   defaults(options, {
-    plugins: [],
     entry: 'index.js',
     primarySection: 'base',
     buildPath: 'build/',
     devServer: {}
+  });
+
+  if (typeof options.plugins === 'function') {
+    options.plugins = options.plugins();
+  }
+  options.plugins = (options.plugins || []).map(function(plugin) {
+    if (typeof plugin === 'function') {
+      return plugin(options);
+    } else {
+      return plugin;
+    }
   });
 
   defaults(options.devServer, {
@@ -100,9 +107,7 @@ module.exports = function (options) {
   }
 
   function buildSections(_options, _callback) {
-    var sectionDirs = fs.readdirSync('./sections'),
-        filePrefix = './sections',
-        blocker = asyncJoin(_callback),
+    var blocker = asyncJoin(_callback),
         callback, options;
 
     // base section
