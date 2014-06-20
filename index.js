@@ -1,4 +1,4 @@
-var sectionBuilder = require('./lib/section-builder'),
+var sectionBuilder = require('./lib/js-section-builder'),
     clean = require('gulp-clean'),
     through = require("through2"),
     path = require('path'),
@@ -178,6 +178,11 @@ module.exports = function (options) {
     },
 
     build: function () {
+      build(options);
+    },
+
+    test: function () {
+      options.test = true;
       build(options);
     },
 
