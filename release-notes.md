@@ -2,7 +2,13 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.4.0...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.5.0...master)
+
+## v0.5.0 - June 19th, 2014
+- add test support - 1323e0e
+  For example usage see jhudson8/react-plugins-united-example@cf610e5
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.4.0...v0.5.0)
 
 ## v0.4.0 - June 16th, 2014
 - update read me - 57170fa
