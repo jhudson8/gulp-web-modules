@@ -2,7 +2,13 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.5.0...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.5.1...master)
+
+## v0.5.1 - June 23rd, 2014
+- implement default "test" using mocha - 3772a4e
+- added proper async callbacks - bdf9833
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.5.0...v0.5.1)
 
 ## v0.5.0 - June 19th, 2014
 - add test support - 1323e0e
