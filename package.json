@@ -38,6 +38,7 @@
     "gwm-dev-server": "~0.0",
     "gwm-util": "~0.0",
     "gulp-plumber": "~0.5",
-    "yargs": "~1.2"
+    "yargs": "~1.2",
+    "gulp-mocha": "*"
   }
 }

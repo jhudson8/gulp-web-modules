@@ -186,7 +186,11 @@ module.exports = function (options) {
 
     test: function () {
       options.test = true;
-      build(options);
+      var testOptions = options.test || {};
+      build(options, function() {
+        var mocha = testOptions.mocha || require('gulp-mocha');
+        gulp.src('./build/test/index.js').pipe(mocha({reporter: testOptions.reporter || 'spec'}));
+      });
     },
 
     watch: function () {
