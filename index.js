@@ -4,6 +4,7 @@ var sectionBuilder = require('./lib/js-section-builder'),
     path = require('path'),
     asyncJoin = require('gwm-util').asyncJoin,
     devServer = require('gwm-dev-server'),
+    join = require('gwm-util').asyncJoin,
     fs = require('fs'),
     argv = require('yargs').argv,
     plugins = [],
@@ -97,13 +98,15 @@ function _clean(src) {
 
 module.exports = function (options) {
 
-  function build(options) {
-      buildSections(options);
-      buildPublic(options);
+  function build(options, callback) {
+    var blocker = join(callback || function() {});
+    buildSections(options, blocker.newCallback());
+    buildPublic(options, blocker.newCallback());
+    blocker.complete();
   }
 
-  function buildPublic(options) {
-    require('./lib/public-builder')(options).build();
+  function buildPublic(options, callback) {
+    require('./lib/public-builder')(options, callback).build();
   }
 
   function buildSections(_options, _callback) {
