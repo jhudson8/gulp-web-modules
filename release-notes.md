@@ -2,7 +2,12 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.5.1...master)
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.5.2...master)
+
+## v0.5.2 - July 19th, 2014
+- fix bug if unit tests do not exist - 8cb0cf9
+
+[Commits](https://github.com/jhudson8/gulp-web-modules/compare/v0.5.1...v0.5.2)
 
 ## v0.5.1 - June 23rd, 2014
 - implement default "test" using mocha - 3772a4e
